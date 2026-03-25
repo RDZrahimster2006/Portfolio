@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synthèse E5 — MRB Portfolio</title>
+<link rel="stylesheet" href="style.css">
+<style>
+
+.e5-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  -webkit-overflow-scrolling: touch;
+}
+
+.e5-ident {
+  padding: 28px 32px;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: start;
+}
+.e5-ident-left h2 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.e5-ident-left p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--cyan);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.e5-ident-right {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--cyan);
+  letter-spacing: 0.1em;
+  text-align: right;
+}
+
+.e5-fields {
+  padding: 20px 32px;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.e5-field label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--muted);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.e5-field span {
+  font-size: 0.87rem;
+  font-weight: 600;
+  color: var(--white);
+}
+.e5-field a {
+  color: var(--cyan);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+.e5-field a:hover { opacity: 0.7; }
+
+.e5-badges { display: flex; gap: 10px; }
+.e5-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.67rem;
+  padding: 4px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+.e5-badge.active {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(0,245,255,0.07);
+  box-shadow: 0 0 10px rgba(0,245,255,0.12);
+}
+
+.scroll-hint {
+  padding: 9px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scroll-hint::before { content: '⟷'; color: var(--cyan); font-size: 0.9rem; }
+
+/* ── MAIN TABLE ─────────────────────────────────── */
+.e5-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1100px;
+  font-size: 0.77rem;
+}
+
+.e5-table .th-top {
+  background: rgba(0,245,255,0.05);
+  color: var(--cyan);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 14px 12px;
+  border: 1px solid rgba(255,255,255,0.06);
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.55;
+}
+.e5-table .th-top.left { text-align: left; }
+
+.e5-table .th-sub {
+  background: rgba(139,92,246,0.04);
+  color: rgba(180,180,210,0.55);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.03em;
+  font-weight: 400;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.04);
+  vertical-align: top;
+  line-height: 1.8;
+}
+
+.tr-section td {
+  background: rgba(65,105,255,0.08);
+  color: rgba(100,140,255,0.9);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 10px 18px;
+  border: 1px solid rgba(65,105,255,0.15);
+  font-weight: 600;
+}
+
+.e5-table tbody tr:not(.tr-section) td {
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 16px 12px;
+  vertical-align: top;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.e5-table tbody tr:not(.tr-section):hover td {
+  background: rgba(0,245,255,0.018);
+}
+
+.td-real { min-width: 220px; max-width: 250px; }
+.td-real strong {
+  display: block;
+  color: var(--white);
+  font-size: 0.83rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.td-real .rdocs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.td-real .rdocs li {
+  font-size: 0.7rem;
+  color: var(--muted);
+  padding-left: 14px;
+  position: relative;
+  line-height: 1.5;
+}
+.td-real .rdocs li::before { content: '›'; position: absolute; left: 0; color: var(--cyan); }
+
+.td-period {
+  min-width: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--violet);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  line-height: 1.8;
+}
+
+.td-comp { min-width: 140px; vertical-align: top !important; }
+
+.clist { display: flex; flex-direction: column; gap: 7px; }
+.citem { display: flex; align-items: flex-start; gap: 7px; font-size: 0.67rem; color: var(--muted); line-height: 1.45; }
+
+.cbox {
+  flex-shrink: 0;
+  margin-top: 1px;
+  width: 13px; height: 13px;
+  border-radius: 3px;
+  border: 1.5px solid var(--muted2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.55rem;
+}
+.cbox.y {
+  background: rgba(0,245,255,0.1);
+  border-color: var(--cyan);
+  color: var(--cyan);
+  box-shadow: 0 0 6px rgba(0,245,255,0.25);
+}
+.cbox.y::before { content: '✓'; }
+.cbox.n { opacity: 0.35; }
+
+.na {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--muted2);
+  letter-spacing: 0.05em;
+  padding: 4px 0;
+}
+
+.justif {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.67rem;
+  color: rgba(180,190,220,0.45);
+  font-style: italic;
+  line-height: 1.55;
+}
+
+@media (max-width: 768px) {
+  .e5-ident { grid-template-columns: 1fr; }
+  .e5-fields { padding: 16px 18px; }
+}
+</style>
+</head>
+<body>
+
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<canvas id="bg-canvas"></canvas>
+
+<div id="loader">
+  <div class="loader-logo">SYNTHÈSE E5</div>
+  <div class="loader-progress"><div class="loader-fill" id="loader-fill"></div></div>
+  <div class="loader-pct" id="loader-pct">0%</div>
+</div>
+
+<header class="navbar">
+  <div class="logo"><a href="index.html">MRB</a></div>
+  <nav class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="presentation.html">Présentation</a>
+    <a href="competences.html">Compétences</a>
+    <a href="missions.html">Missions</a>
+    <a href="stages.html">Stages</a>
+    <a href="veille.html">Veille</a>
+    <a href="synthese.html">Synthèse</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="page-wrap">
+
+  <div class="section-header reveal">
+    <div class="section-eyebrow">06 — Épreuve E5</div>
+    <h1 class="section-title">Tableau de synthèse</h1>
+  </div>
+
+  <div class="e5-wrap reveal reveal-delay-1">
+
+    <!-- Entête officielle -->
+    <div class="e5-ident">
+      <div class="e5-ident-left">
+        <h2>BTS Services Informatiques aux Organisations</h2>
+        <p>Tableau de synthèse des réalisations professionnelles — Annexe 8-1</p>
+      </div>
+      <div class="e5-ident-right">SESSION 2026</div>
+    </div>
+
+    <!-- Champs candidat -->
+    <div class="e5-fields">
+      <div class="e5-field">
+        <label>Nom et prénom</label>
+        <span>BELLAHCENE Mohamed-Rahim</span>
+      </div>
+      <div class="e5-field">
+        <label>N° candidat</label>
+        <span style="color:var(--muted);">À compléter</span>
+      </div>
+      <div class="e5-field">
+        <label>Centre de formation</label>
+        <span>Lycée Voillaume</span>
+      </div>
+      <div class="e5-field">
+        <label>Option</label>
+        <div class="e5-badges">
+          <span class="e5-badge">▢ SISR</span>
+          <span class="e5-badge active">✓ SLAM</span>
+        </div>
+      </div>
+      <div class="e5-field">
+        <label>Adresse URL du portfolio</label>
+        <a href="index.html">portfolio — index.html</a>
+      </div>
+    </div>
+
+    <div class="scroll-hint">Faites défiler horizontalement pour voir toutes les colonnes de compétences</div>
+
+    <!-- ══════════ TABLE PRINCIPALE ══════════ -->
+    <table class="e5-table">
+      <thead>
+        <!-- Ligne 1 — titres colonnes -->
+        <tr>
+          <th class="th-top left" rowspan="2" style="min-width:220px;">
+            Réalisations professionnelles<br>
+            <span style="font-weight:300;color:var(--muted);font-size:0.53rem;">(intitulé + documents associés)</span>
+          </th>
+          <th class="th-top left" rowspan="2" style="min-width:100px;">Période</th>
+          <th class="th-top">Gérer le patrimoine informatique</th>
+          <th class="th-top">Répondre aux incidents et demandes d'assistance et d'évolution</th>
+          <th class="th-top">Développer la présence en ligne de l'organisation</th>
+          <th class="th-top">Travailler en mode projet</th>
+          <th class="th-top">Mettre à disposition des utilisateurs un service informatique</th>
+          <th class="th-top">Organiser son développement professionnel</th>
+        </tr>
+        <!-- Ligne 2 — sous-compétences -->
+        <tr>
+          <th class="th-sub">▸ Recenser et identifier les ressources numériques<br>▸ Exploiter des référentiels, normes et standards<br>▸ Mettre en place les niveaux d'habilitation<br>▸ Vérifier la continuité d'un service<br>▸ Gérer des sauvegardes<br>▸ Vérifier le respect des règles d'utilisation</th>
+          <th class="th-sub">▸ Collecter, suivre et orienter des demandes<br>▸ Traiter des demandes réseau / système / applicatifs<br>▸ Traiter des demandes concernant les applications</th>
+          <th class="th-sub">▸ Valoriser l'image sur les médias numériques<br>▸ Référencer les services en ligne<br>▸ Participer à l'évolution d'un site Web</th>
+          <th class="th-sub">▸ Analyser les objectifs et modalités d'un projet<br>▸ Planifier les activités<br>▸ Évaluer les indicateurs de suivi et analyser les écarts</th>
+          <th class="th-sub">▸ Réaliser les tests d'intégration et d'acceptation<br>▸ Déployer un service<br>▸ Accompagner les utilisateurs dans la mise en place</th>
+          <th class="th-sub">▸ Mettre en place son environnement d'apprentissage<br>▸ Mettre en œuvre des outils de veille<br>▸ Gérer son identité professionnelle<br>▸ Développer son projet professionnel</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <!-- ══ SECTION FORMATION ══ -->
+        <tr class="tr-section"><td colspan="8">Réalisations en cours de formation</td></tr>
+
+        <!-- ── PROJET GSB LARAVEL ── -->
+        <tr>
+          <td class="td-real">
+            <strong>Projet GSB Laravel</strong>
+            <ul class="rdocs">
+              <li>Application web Laravel — architecture MVC</li>
+              <li>Gestion des frais professionnels (visiteurs / gestionnaires)</li>
+              <li>Code source — <a href="https://github.com/RDZrahimster2006/gsbLaravel" target="_blank" style="font-size:0.65rem;">GitHub</a></li>
+              <li>Voir page <a href="projets.html">Projets</a></li>
+            </ul>
+          </td>
+          <td class="td-period">2024 / 2025<br>1ère année<br>BTS</td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Exploiter des référentiels et standards adoptés (framework Laravel, conventions MVC)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Mettre en place les niveaux d'habilitation (rôles visiteur / gestionnaire avec auth Laravel)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Recenser et identifier les ressources numériques (tables BDD : visiteur, fichefrais, etat…)</span></div>
+            </div>
+            <div class="justif">Architecture MVC imposée par le cadre Laravel ; système d'authentification avec deux rôles distincts (visiteur et gestionnaire) donnant accès à des fonctionnalités différentes.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Traiter des demandes concernant les applications (saisie et validation des frais)</span></div>
+            </div>
+            <div class="justif">Les visiteurs soumettent leurs fiches de frais ; les gestionnaires traitent et valident les demandes via l'application.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Participer à l'évolution d'un site Web exploitant les données de l'organisation</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Valoriser l'image de l'organisation (interface web professionnelle)</span></div>
+            </div>
+            <div class="justif">Application web accessible en ligne permettant aux collaborateurs de gérer leurs remboursements à distance.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Analyser les objectifs et modalités d'organisation du projet</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Planifier les activités (conception BDD → développement → tests)</span></div>
+            </div>
+            <div class="justif">Projet mené de la modélisation (MCD/MLD) jusqu'au développement complet, avec découpage en étapes successives.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Réaliser les tests d'intégration et d'acceptation (test de chaque module)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Déployer un service (application opérationnelle)</span></div>
+            </div>
+            <div class="justif">Tests fonctionnels sur l'authentification, la saisie de frais, la consultation des fiches et la gestion des états.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Mettre en place son environnement (Laragon, VS Code, Git)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Gérer son identité professionnelle (projet publié sur GitHub)</span></div>
+            </div>
+            <div class="justif">Environnement de développement local sous Laragon ; versionnage avec Git ; code disponible publiquement sur GitHub.</div>
+          </td>
+        </tr>
+
+        <!-- ── PROJET GSB RAPPORTS C# ── -->
+        <tr>
+          <td class="td-real">
+            <strong>Projet GSB Rapports</strong>
+            <ul class="rdocs">
+              <li>Application desktop C# WinForms</li>
+              <li>Gestion des rapports de visites médicales</li>
+              <li>Connexion SQL Server via ADO.NET</li>
+              <li>Code source — <a href="https://github.com/RDZrahimster2006/GsbRapports" target="_blank" style="font-size:0.65rem;">GitHub</a></li>
+              <li>Voir page <a href="projets.html">Projets</a></li>
+            </ul>
+          </td>
+          <td class="td-period">2024 / 2025<br>1ère année<br>BTS</td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Exploiter des référentiels et standards (ADO.NET, SQL Server)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Recenser les ressources numériques (BDD : visiteur, rapport, medecin, medicament, famille, offrir)</span></div>
+            </div>
+            <div class="justif">Modélisation complète de la base relationnelle avec 6 tables liées ; connexion normalisée via ADO.NET et chaînes de connexion sécurisées.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Traiter des demandes applicatives (affichage et consultation des rapports)</span></div>
+            </div>
+            <div class="justif">Interface permettant aux délégués médicaux de consulter et gérer leurs rapports de visite.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="na">Non applicable — application desktop locale</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Analyser les objectifs du projet (cahier des charges GSB)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Planifier les activités (MCD → C# → tests)</span></div>
+            </div>
+            <div class="justif">Développement structuré en étapes : modélisation du schéma relationnel, conception de l'interface WinForms, liaison avec SQL Server.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Réaliser les tests d'intégration (connexion BDD, affichages)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Déployer un service (application Windows installable)</span></div>
+            </div>
+            <div class="justif">Tests de connexion SQL Server, validation des requêtes ADO.NET et de l'affichage des données dans les formulaires WinForms.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Mettre en place son environnement (Visual Studio, SSMS)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Gérer son identité professionnelle (GitHub)</span></div>
+            </div>
+            <div class="justif">Utilisation de Visual Studio 2022 et SQL Server Management Studio ; projet versionné et publié sur GitHub.</div>
+          </td>
+        </tr>
+
+        <!-- ── VEILLE TECHNO ── -->
+        <tr>
+          <td class="td-real">
+            <strong>Veille technologique — No-Code &amp; IA</strong>
+            <ul class="rdocs">
+              <li>Étude des plateformes : Builder.ai, AppyPie, AppSheet, Glide</li>
+              <li>Analyse avantages / limites du no-code</li>
+              <li>Voir page <a href="veille.html">Veille</a></li>
+            </ul>
+          </td>
+          <td class="td-period">2024 – 2026<br>1ère &amp; 2ème<br>année</td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Exploiter des référentiels et standards du secteur numérique</span></div>
+            </div>
+            <div class="justif">Identification et analyse des standards technologiques émergents (IA générative, no-code, LLM).</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="na">Non applicable</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Référencer les services en ligne de l'organisation et mesurer leur visibilité</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Participer à l'évolution d'un site Web (solutions no-code étudiées)</span></div>
+            </div>
+            <div class="justif">Étude de plateformes permettant de créer des applications web sans coder, avec mesure de leur visibilité et positionnement en ligne.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="na">Non applicable</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="na">Non applicable</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Mettre en œuvre des outils et stratégies de veille informationnelle</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Développer son projet professionnel (connaissance du secteur)</span></div>
+            </div>
+            <div class="justif">Veille continue sur les évolutions du no-code et de l'IA générative ; sources documentées (Business Insider 2025, sites officiels des plateformes).</div>
+          </td>
+        </tr>
+
+        <!-- ══ SECTION STAGE 1ÈRE ANNÉE ══ -->
+        <tr class="tr-section"><td colspan="8">Réalisations en milieu professionnel — 1ère année</td></tr>
+
+        <!-- ── STAGE 1 ANGULAR ── -->
+        <tr>
+          <td class="td-real">
+            <strong>Stage 1 — H.BELL Consulting (4 semaines)</strong>
+            <ul class="rdocs">
+              <li>Intégration dans une équipe informatique</li>
+              <li>Ajout de fonctionnalités sur app Angular existante</li>
+              <li>Notifications push — Service Worker</li>
+              <li>Convention de stage</li>
+              <li>Voir page <a href="missions.html">Missions</a></li>
+            </ul>
+          </td>
+          <td class="td-period">Année<br>2024/2025<br>4 semaines</td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Recenser et identifier les ressources de l'application existante</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Exploiter des référentiels et standards (Angular CLI, TypeScript)</span></div>
+            </div>
+            <div class="justif">Analyse complète de l'architecture Angular existante : composants, services, modules, routing — avant toute modification.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Collecter, suivre et orienter des demandes de l'équipe</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Traiter des demandes applicatives (nouvelles fonctionnalités)</span></div>
+            </div>
+            <div class="justif">Réponse aux besoins exprimés par l'équipe : ajout de fonctionnalités demandées, intégration dans le workflow de développement existant.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Participer à l'évolution d'un site Web / application</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Valoriser l'image de l'organisation (notifications push, engagement utilisateurs)</span></div>
+            </div>
+            <div class="justif">Mise en place de notifications push via Service Worker améliorant l'engagement et la rétention des utilisateurs de l'application.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Analyser les objectifs et modalités d'organisation d'un projet en entreprise</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Comprendre le cycle complet (idée → déploiement)</span></div>
+            </div>
+            <div class="justif">Participation active à la vie d'une équipe informatique professionnelle, compréhension du cycle de développement complet en conditions réelles.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Réaliser les tests d'intégration (Service Worker, fonctionnalités)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Déployer des évolutions sur l'application existante</span></div>
+            </div>
+            <div class="justif">Tests des nouvelles fonctionnalités intégrées avant mise en production, validation du bon fonctionnement des notifications push.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Mettre en place son environnement (Angular, TypeScript)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Développer son projet professionnel (expérience en entreprise)</span></div>
+            </div>
+            <div class="justif">Montée en compétence sur Angular et TypeScript en situation professionnelle réelle, première expérience d'intégration dans une équipe.</div>
+          </td>
+        </tr>
+
+        <!-- ══ SECTION STAGE 2ÈME ANNÉE ══ -->
+        <tr class="tr-section"><td colspan="8">Réalisations en milieu professionnel — 2ème année</td></tr>
+
+        <!-- ── STAGE 2 HABIT TRACKER ── -->
+        <tr>
+          <td class="td-real">
+            <strong>Stage 2 — Habit Tracker Laravel (8 semaines)</strong>
+            <ul class="rdocs">
+              <li>Application web full-stack de A à Z</li>
+              <li>Suivi d'habitudes quotidiennes / hebdomadaires</li>
+              <li>Auth, gestion tâches, tableau de progression 30j</li>
+              <li>Calcul automatique taux de réussite</li>
+              <li>Déploiement cloud</li>
+              <li>Convention et rapport de stage</li>
+              <li>Voir page <a href="missions.html">Missions</a></li>
+            </ul>
+          </td>
+          <td class="td-period">Année<br>2025/2026<br>8 semaines</td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Exploiter des référentiels et standards (Laravel MVC, conventions BDD)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Mettre en place les niveaux d'habilitation (authentification sécurisée)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Recenser les ressources numériques (BDD : users, taches, users_taches, realisations)</span></div>
+            </div>
+            <div class="justif">Conception complète de la base de données relationnelle avec 4 tables liées ; système d'authentification Laravel Breeze/Sanctum ; respect des conventions de nommage et des bonnes pratiques MVC.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Traiter des demandes applicatives (besoins utilisateurs finaux)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Collecter et orienter des demandes (fonctionnalités rattrapables)</span></div>
+            </div>
+            <div class="justif">Application développée pour des utilisateurs réels : leurs besoins ont guidé l'ensemble du développement (gestion des tâches rattrapables, tableau de progression).</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Participer à l'évolution d'un site Web exploitant les données</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Référencer les services en ligne (déploiement cloud)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Valoriser l'image de l'organisation (interface Bootstrap responsive)</span></div>
+            </div>
+            <div class="justif">Application web accessible publiquement en ligne après déploiement cloud ; interface responsive Bootstrap adaptée mobile/desktop.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Analyser les objectifs et modalités d'organisation du projet</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Planifier les activités sur 8 semaines</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Évaluer les indicateurs de suivi et analyser les écarts</span></div>
+            </div>
+            <div class="justif">Projet mené en autonomie sur 8 semaines : analyse des besoins, MCD/MLD, développement itératif, tests, déploiement — avec suivi régulier de l'avancement.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Réaliser les tests d'intégration et d'acceptation complets</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Déployer un service sur plateforme cloud</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Accompagner les utilisateurs dans la prise en main</span></div>
+            </div>
+            <div class="justif">Tests fonctionnels sur chaque module (auth, CRUD tâches, validation habitudes, calcul statistiques) ; déploiement cloud ; accompagnement à la prise en main.</div>
+          </td>
+
+          <td class="td-comp">
+            <div class="clist">
+              <div class="citem"><div class="cbox y"></div><span>Mettre en place son environnement d'apprentissage professionnel</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Mettre en œuvre des outils de veille (technologies utilisées)</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Gérer son identité professionnelle</span></div>
+              <div class="citem"><div class="cbox y"></div><span>Développer son projet professionnel</span></div>
+            </div>
+            <div class="justif">Stage le plus complet : développement full-stack en conditions réelles sur 8 semaines, consolidation de toutes les compétences SLAM, renforcement de l'identité professionnelle.</div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table> 
+  </div>
+
+</div>
+
+<footer>© 2026 BELLAHCENE Mohamed-Rahim — BTS SIO SLAM — Annexe 8-1 Épreuve E5</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

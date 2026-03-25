@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stages — MRB Portfolio</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* ── SCREENSHOT GALLERY ──────────────────── */
+.screenshot-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:16px;}
+.screenshot-gallery:empty{display:none;}
+.screenshot-thumb{position:relative;border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border);aspect-ratio:16/10;cursor:pointer;transition:all 0.2s;}
+.screenshot-thumb:hover{border-color:rgba(0,245,255,0.35);transform:translateY(-2px);}
+.screenshot-thumb img{width:100%;height:100%;object-fit:cover;}
+.screenshot-thumb .del-btn{position:absolute;top:6px;right:6px;background:rgba(3,4,10,0.8);border:1px solid var(--border);color:var(--muted);width:24px;height:24px;border-radius:50%;font-size:0.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;}
+.screenshot-thumb:hover .del-btn{opacity:1;}
+.screenshot-thumb .del-btn:hover{border-color:#ff4466;color:#ff4466;}
+.upload-zone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:28px 20px;border:1.5px dashed rgba(0,245,255,0.2);border-radius:var(--radius-sm);background:rgba(0,245,255,0.02);cursor:pointer;transition:all 0.2s;text-align:center;}
+.upload-zone:hover{border-color:rgba(0,245,255,0.5);background:rgba(0,245,255,0.05);}
+.upload-zone .upload-icon{font-size:1.6rem;}
+.upload-zone .upload-text{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--muted);letter-spacing:0.06em;line-height:1.8;}
+.upload-zone .upload-text small{opacity:0.6;}
+#lightbox{display:none;position:fixed;inset:0;background:rgba(3,4,10,0.95);z-index:2000;align-items:center;justify-content:center;padding:20px;}
+#lightbox.open{display:flex;}
+#lightbox img{max-width:92vw;max-height:88vh;border-radius:var(--radius-sm);box-shadow:0 0 60px rgba(0,245,255,0.15);}
+#lightbox-close{position:fixed;top:20px;right:20px;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--muted);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+#lightbox-close:hover{border-color:var(--cyan);color:var(--cyan);}
+</style>
+
+</head>
+<body>
+
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<canvas id="bg-canvas"></canvas>
+<div id="loader">
+  <div class="loader-logo">STAGES</div>
+  <div class="loader-progress"><div class="loader-fill" id="loader-fill"></div></div>
+  <div class="loader-pct" id="loader-pct">0%</div>
+</div>
+
+<header class="navbar">
+  <div class="logo"><a href="index.html">MRB</a></div>
+  <nav class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="presentation.html">Présentation</a>
+    <a href="competences.html">Compétences</a>
+    <a href="missions.html">Missions</a>
+    <a href="stages.html">Stages</a>
+    <a href="veille.html">Veille</a>
+    
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="page-wrap">
+
+  <div class="section-header reveal">
+    <div class="section-eyebrow">04 — Stages</div>
+    <h1 class="section-title">Expériences</h1>
+  </div>
+
+  <!-- STAGE 1 -->
+  <div class="glass reveal reveal-delay-1">
+    <h2>Stage 1 — H.Bell Consulting · Juin 2024 · 4 semaines</h2>
+    <p>
+      Premier contact avec le monde professionnel de l'informatique au sein de l'entreprise
+      <strong>H.Bell Consulting</strong>. Ce stage m'a permis de découvrir le fonctionnement
+      concret d'une équipe informatique et d'intervenir directement sur un projet Angular en cours de développement.
+    </p>
+
+    <h3>Missions réalisées</h3>
+    <ul>
+      <li>Découverte et prise en main d'une application web <strong>Angular</strong> existante</li>
+      <li>Participation active au développement de nouvelles fonctionnalités</li>
+      <li>Mise en place de <strong>notifications push</strong> via Service Worker</li>
+      <li>Compréhension du cycle de développement complet — de l'idée au déploiement</li>
+      <li>Intégration dans l'organisation de l'équipe informatique : réunions, suivi de tickets</li>
+    </ul>
+
+    <h3>Compétences acquises</h3>
+    <p>
+      Ce stage m'a permis de pratiquer Angular et TypeScript dans un contexte professionnel réel,
+      et de comprendre comment une équipe organise et priorise ses développements.
+      J'ai également appris à travailler sur un code existant, sans repartir de zéro.
+    </p>
+
+    <h3>Technologies utilisées</h3>
+    <div class="tags" style="margin-top:0;">
+      <span class="tag">Angular</span>
+      <span class="tag">TypeScript</span>
+      <span class="tag">Service Worker</span>
+      <span class="tag">Notifications Push</span>
+      <span class="tag">Architecture frontend</span>
+    </div>
+
+    <h3>Captures d'écran</h3>
+    <div id="gallery-stage1" class="screenshot-gallery"></div>
+    <label class="upload-zone" for="upload-stage1">
+      <span class="upload-icon">📸</span>
+      <span class="upload-text">Ajouter des captures — Stage 1 (Angular · H.Bell Consulting)<br><small>PNG, JPG acceptés</small></span>
+      <input type="file" id="upload-stage1" accept="image/*" multiple style="display:none;" onchange="addScreenshots('gallery-stage1', this.files)">
+    </label>
+  </div>
+
+  <!-- STAGE 2 -->
+  <div class="glass reveal reveal-delay-2">
+    <h2>Stage 2 — H.Bell Consulting · Janvier – Mars 2026 · 8 semaines</h2>
+    <p>
+      Stage approfondi au sein de la même entreprise, <strong>H.Bell Consulting</strong>,
+      avec cette fois une mission de développement de nouvelles fonctionnalités
+      et d'optimisation d'une application existante — le <strong>Habit Tracker</strong>.
+      Ce stage m'a permis de pratiquer l'architecture MVC Laravel sur un projet réel
+      avec de vrais utilisateurs.
+    </p>
+
+    <h3>Projet — Habit Tracker</h3>
+    <p>
+      Application web permettant aux utilisateurs de créer et suivre leurs habitudes
+      quotidiennes, hebdomadaires ou mensuelles. Elle affiche la progression
+      sur les 30 derniers jours et calcule automatiquement les taux de réussite.
+      J'ai repris l'application existante pour y ajouter des fonctionnalités et
+      optimiser le code PHP Laravel ainsi que la base de données.
+    </p>
+
+    <h3>Missions réalisées</h3>
+    <ul>
+      <li>Stage approfondi au sein de l'entreprise — montée en compétences rapide</li>
+      <li>Développement de <strong>nouvelles fonctionnalités</strong> sur le Habit Tracker</li>
+      <li>Optimisation du code <strong>PHP Laravel</strong> existant (performances, lisibilité)</li>
+      <li>Amélioration et évolution de la <strong>base de données MySQL</strong></li>
+      <li>Déploiement de l'application en environnement cloud</li>
+    </ul>
+
+    <h3>Architecture &amp; Base de données</h3>
+    <ul>
+      <li><strong style="color:var(--white);">users</strong> — gestion des comptes utilisateurs</li>
+      <li><strong style="color:var(--white);">taches</strong> — stockage des habitudes créées</li>
+      <li><strong style="color:var(--white);">users_taches</strong> — association utilisateur / tâches</li>
+      <li><strong style="color:var(--white);">realisations</strong> — enregistrement des habitudes complétées</li>
+    </ul>
+    <p>Architecture <strong style="color:var(--white);">MVC Laravel</strong> : Modèles → Contrôleurs → Vues Blade</p>
+
+    <h3>Technologies utilisées</h3>
+    <div class="tags" style="margin-top:0;">
+      <span class="tag">Laravel</span>
+      <span class="tag">PHP</span>
+      <span class="tag">Blade</span>
+      <span class="tag">Bootstrap</span>
+      <span class="tag">JavaScript</span>
+      <span class="tag">MySQL</span>
+      <span class="tag">HTML / CSS</span>
+      <span class="tag">Git</span>
+    </div>
+
+    <h3>Captures d'écran</h3>
+    <div id="gallery-stage2" class="screenshot-gallery"></div>
+    <label class="upload-zone" for="upload-stage2">
+      <span class="upload-icon">📸</span>
+      <span class="upload-text">Ajouter des captures — Stage 2 (Habit Tracker · H.Bell Consulting)<br><small>PNG, JPG acceptés</small></span>
+      <input type="file" id="upload-stage2" accept="image/*" multiple style="display:none;" onchange="addScreenshots('gallery-stage2', this.files)">
+    </label>
+  </div>
+
+</div>
+
+<footer>© 2026 BELLAHCENE Mohamed-Rahim</footer>
+<script src="main.js"></script>
+
+<div id="lightbox">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+<script>
+function addScreenshots(galleryId, files) {
+  const gallery = document.getElementById(galleryId);
+  Array.from(files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const thumb = document.createElement('div');
+      thumb.className = 'screenshot-thumb';
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.onclick = () => openLightbox(e.target.result);
+      const del = document.createElement('button');
+      del.className = 'del-btn';
+      del.textContent = '✕';
+      del.onclick = ev => { ev.stopPropagation(); thumb.remove(); };
+      thumb.appendChild(img);
+      thumb.appendChild(del);
+      gallery.appendChild(thumb);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+document.querySelectorAll('.upload-zone').forEach(zone => {
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor = 'var(--cyan)'; });
+  zone.addEventListener('dragleave', () => { zone.style.borderColor = ''; });
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.style.borderColor = '';
+    const input = zone.querySelector('input[type="file"]');
+    const galleryId = input.id.replace('upload-', 'gallery-');
+    addScreenshots(galleryId, e.dataTransfer.files);
+  });
+});
+</script>
+
+</body>
+</html>

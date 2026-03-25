@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Missions — MRB Portfolio</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.tabs-bar{display:flex;gap:4px;padding:4px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:100px;width:fit-content;margin-bottom:32px;}
+.tab-btn{font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:8px 22px;border-radius:100px;border:none;background:transparent;color:var(--muted);cursor:pointer;transition:all 0.25s;}
+.tab-btn.active{background:var(--grad);color:#fff;box-shadow:0 4px 20px rgba(65,105,255,0.35);}
+.tab-btn:hover:not(.active){color:var(--white);background:rgba(255,255,255,0.05);}
+.tab-panel{display:none;}.tab-panel.active{display:flex;flex-direction:column;gap:28px;}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+.proj-card{background:linear-gradient(135deg,rgba(255,255,255,0.035) 0%,rgba(255,255,255,0.01) 100%);border:1px solid var(--border);border-radius:var(--radius);padding:30px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden;transition:all 0.35s;}
+.proj-card:hover{border-color:rgba(0,245,255,0.25);box-shadow:var(--glow-cyan);transform:translateY(-5px);}
+.proj-card-num{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--violet);letter-spacing:0.2em;}
+.proj-card h3{font-size:1.2rem;font-weight:700;color:var(--white);letter-spacing:-0.02em;}
+.proj-card p{color:var(--muted);font-size:0.88rem;line-height:1.7;flex:1;}
+.modal{display:none;position:fixed;inset:0;background:rgba(3,4,10,0.92);backdrop-filter:blur(16px);z-index:1000;align-items:center;justify-content:center;padding:20px;}
+.modal.open{display:flex;}
+.modal-box{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:40px;width:100%;max-width:640px;max-height:85vh;overflow-y:auto;position:relative;animation:modalPop 0.4s cubic-bezier(0.16,1,0.3,1) forwards;scrollbar-width:thin;}
+@keyframes modalPop{from{opacity:0;transform:scale(0.9) translateY(30px);}to{opacity:1;transform:none;}}
+.modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);border-radius:var(--radius) var(--radius) 0 0;}
+.modal-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--muted);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.modal-close:hover{border-color:var(--cyan);color:var(--cyan);}
+.modal-box h2{font-size:1.6rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:24px;color:var(--white);}
+.modal-section{margin-bottom:20px;}
+.modal-label{font-family:'JetBrains Mono',monospace;font-size:0.63rem;color:var(--cyan);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px;}
+.modal-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.modal-list li{color:var(--muted);font-size:0.88rem;padding-left:18px;position:relative;line-height:1.6;}
+.modal-list li::before{content:'▸';position:absolute;left:0;color:var(--cyan);font-size:0.7rem;top:2px;}
+/* FICHES E6 */
+.fiche{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);overflow:hidden;position:relative;}
+.fiche::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);}
+.fiche.f2::before{background:var(--grad2);}
+.fiche-head{padding:26px 32px 20px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;}
+.fiche-head-eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--muted);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:6px;}
+.fiche-head h2{font-size:1.25rem;font-weight:800;letter-spacing:-0.02em;color:var(--white);margin:0;}
+.fiche-num{font-family:'JetBrains Mono',monospace;font-size:2.2rem;font-weight:700;color:var(--cyan);opacity:0.15;line-height:1;}
+.f2 .fiche-num{color:var(--violet);}
+.fiche-meta{padding:18px 32px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;background:rgba(255,255,255,0.01);}
+.fiche-meta label{display:block;font-family:'JetBrains Mono',monospace;font-size:0.57rem;color:var(--muted);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:5px;}
+.fiche-meta span{font-size:0.86rem;font-weight:600;color:var(--white);display:block;line-height:1.4;}
+.badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.62rem;padding:3px 12px;border-radius:100px;border:1px solid var(--cyan);color:var(--cyan);background:rgba(0,245,255,0.06);}
+.f2 .badge{border-color:var(--violet);color:var(--violet);background:rgba(139,92,246,0.06);}
+.fiche-body{padding:28px 32px;display:flex;flex-direction:column;gap:0;}
+.fsec{padding:22px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.fsec:last-child{border-bottom:none;padding-bottom:0;}
+.fsec:first-child{padding-top:0;}
+.fsec-label{font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--cyan);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.fsec-label::after{content:'';flex:1;height:1px;background:rgba(0,245,255,0.1);}
+.f2 .fsec-label{color:var(--violet);}
+.f2 .fsec-label::after{background:rgba(139,92,246,0.1);}
+.fsec p{color:var(--muted);font-size:0.87rem;line-height:1.8;margin-bottom:10px;}
+.fsec p:last-child{margin-bottom:0;}
+.fsec ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.fsec ul li{color:var(--muted);font-size:0.86rem;padding-left:20px;position:relative;line-height:1.65;}
+.fsec ul li::before{content:'▸';position:absolute;left:0;color:var(--cyan);font-size:0.7rem;top:3px;}
+.f2 .fsec ul li::before{color:var(--violet);}
+.comp-list{display:flex;flex-direction:column;gap:12px;}
+.comp-item{display:flex;align-items:flex-start;gap:12px;}
+.cbox{flex-shrink:0;margin-top:2px;width:16px;height:16px;border-radius:4px;background:rgba(0,245,255,0.1);border:1.5px solid var(--cyan);color:var(--cyan);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;box-shadow:0 0 8px rgba(0,245,255,0.2);}
+.f2 .cbox{background:rgba(139,92,246,0.1);border-color:var(--violet);color:var(--violet);box-shadow:0 0 8px rgba(139,92,246,0.2);}
+.ctext{font-size:0.87rem;font-weight:600;color:var(--white);line-height:1.5;}
+.ctext small{font-size:0.74rem;color:var(--muted);font-weight:400;display:block;margin-top:2px;}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;}
+.res-item{background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;}
+.res-item label{display:block;font-family:'JetBrains Mono',monospace;font-size:0.57rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:7px;}
+.res-item .tags{margin-top:0;}
+.acces{background:rgba(0,245,255,0.04);border:1px solid rgba(0,245,255,0.12);border-radius:var(--radius-sm);padding:18px 20px;display:flex;flex-direction:column;gap:10px;}
+.f2 .acces{background:rgba(139,92,246,0.04);border-color:rgba(139,92,246,0.12);}
+.acces-row{display:flex;align-items:center;gap:14px;}
+.acces-row label{font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;min-width:80px;flex-shrink:0;}
+.acces-row span{font-size:0.83rem;color:var(--white);font-family:'JetBrains Mono',monospace;}
+.acces-row a{font-size:0.83rem;color:var(--cyan);font-family:'JetBrains Mono',monospace;text-decoration:none;}
+.acces-row a:hover{opacity:0.7;}
+.sep{display:flex;align-items:center;gap:20px;margin:4px 0;}
+.sep span{font-family:'JetBrains Mono',monospace;font-size:0.63rem;color:var(--muted);letter-spacing:0.2em;white-space:nowrap;}
+.sep::before,.sep::after{content:'';flex:1;height:1px;background:var(--border);}
+strong.hl{color:var(--white);}
+/* SCREENSHOT GALLERY */
+.screenshot-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:16px;}
+.screenshot-gallery:empty{display:none;}
+.screenshot-thumb{position:relative;border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border);aspect-ratio:16/10;cursor:pointer;transition:all 0.2s;}
+.screenshot-thumb:hover{border-color:rgba(0,245,255,0.35);transform:translateY(-2px);}
+.screenshot-thumb img{width:100%;height:100%;object-fit:cover;}
+.screenshot-thumb .del-btn{position:absolute;top:6px;right:6px;background:rgba(3,4,10,0.8);border:1px solid var(--border);color:var(--muted);width:24px;height:24px;border-radius:50%;font-size:0.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;}
+.screenshot-thumb:hover .del-btn{opacity:1;}
+.screenshot-thumb .del-btn:hover{border-color:#ff4466;color:#ff4466;}
+.upload-zone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:28px 20px;border:1.5px dashed rgba(0,245,255,0.2);border-radius:var(--radius-sm);background:rgba(0,245,255,0.02);cursor:pointer;transition:all 0.2s;text-align:center;}
+.upload-zone:hover{border-color:rgba(0,245,255,0.5);background:rgba(0,245,255,0.05);}
+.upload-zone .upload-icon{font-size:1.6rem;}
+.upload-zone .upload-text{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--muted);letter-spacing:0.06em;line-height:1.8;}
+.upload-zone .upload-text small{opacity:0.6;}
+#lightbox{display:none;position:fixed;inset:0;background:rgba(3,4,10,0.95);z-index:2000;align-items:center;justify-content:center;padding:20px;}
+#lightbox.open{display:flex;}
+#lightbox img{max-width:92vw;max-height:88vh;border-radius:var(--radius-sm);box-shadow:0 0 60px rgba(0,245,255,0.15);}
+#lightbox-close{position:fixed;top:20px;right:20px;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--muted);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+#lightbox-close:hover{border-color:var(--cyan);color:var(--cyan);}
+/* TICKET SECTION */
+.ticket-section{border:1px solid rgba(139,92,246,0.3);border-radius:var(--radius);background:rgba(139,92,246,0.04);overflow:hidden;position:relative;}
+.ticket-section::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#8b5cf6,#4169ff);}
+@media(max-width:768px){.fiche-head{grid-template-columns:1fr;}.fiche-num{display:none;}.fiche-body,.fiche-meta,.fiche-head{padding:18px;}.res-grid{grid-template-columns:1fr 1fr;}.tabs-bar{flex-wrap:wrap;border-radius:var(--radius);}.tab-btn{font-size:0.65rem;padding:7px 14px;}}
+
+.modal-upload{margin-top:18px;}
+.modal-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:12px;}
+.modal-gallery:empty{display:none;}
+.modal-thumb{position:relative;border-radius:8px;overflow:hidden;border:1px solid var(--border);aspect-ratio:16/10;cursor:pointer;}
+.modal-thumb img{width:100%;height:100%;object-fit:cover;}
+.modal-thumb .del-btn{position:absolute;top:4px;right:4px;background:rgba(3,4,10,0.8);border:1px solid var(--border);color:var(--muted);width:20px;height:20px;border-radius:50%;font-size:0.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;}
+.modal-thumb:hover .del-btn{opacity:1;}
+.modal-upload label{display:flex;align-items:center;gap:10px;padding:14px 18px;border:1.5px dashed rgba(0,245,255,0.2);border-radius:8px;background:rgba(0,245,255,0.02);cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--muted);transition:all 0.2s;}
+.modal-upload label:hover{border-color:rgba(0,245,255,0.5);background:rgba(0,245,255,0.05);}
+</style>
+</head>
+<body>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<canvas id="bg-canvas"></canvas>
+<div id="loader">
+  <div class="loader-logo">MISSIONS</div>
+  <div class="loader-progress"><div class="loader-fill" id="loader-fill"></div></div>
+  <div class="loader-pct" id="loader-pct">0%</div>
+</div>
+<header class="navbar">
+  <div class="logo"><a href="index.html">MRB</a></div>
+  <nav class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="presentation.html">Présentation</a>
+    <a href="competences.html">Compétences</a>
+    <a href="missions.html">Missions</a>
+    <a href="stages.html">Stages</a>
+    <a href="veille.html">Veille</a>
+    
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="page-wrap">
+
+  <div class="section-header reveal">
+    <div class="section-eyebrow">03 — Projets &amp; Épreuve E6</div>
+    <h1 class="section-title">Missions</h1>
+  </div>
+
+  <div class="tabs-bar reveal reveal-delay-1">
+    <button class="tab-btn active" onclick="switchTab('projets', this)">Projets réalisés</button>
+    <button class="tab-btn" onclick="switchTab('e6', this)">Fiches E6 officielles</button>
+  </div>
+
+  <!-- ═══ TAB 1 — PROJETS ═══ -->
+  <div id="tab-projets" class="tab-panel active">
+
+    <div class="proj-grid">
+      <div class="proj-card reveal">
+        <div class="proj-card-num">PROJET_01</div>
+        <h3>Jeu Pong</h3>
+        <p>Développement d'un jeu Pong en JavaScript — logique de collision, boucle de jeu, affichage canvas HTML5, gestion du score en temps réel.</p>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">HTML Canvas</span><span class="tag">CSS</span></div>
+        <button class="btn btn-ghost" style="margin-top:20px;width:100%;justify-content:center;" onclick="openModal('m-pong')">Voir les détails</button>
+      </div>
+      <div class="proj-card reveal reveal-delay-1">
+        <div class="proj-card-num">PROJET_02</div>
+        <h3>Pokédex via API</h3>
+        <p>Application web affichant les Pokémon via l'API PokéAPI. Consommation REST, affichage dynamique des données JSON, filtres de recherche en temps réel.</p>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">API REST</span><span class="tag">JSON</span><span class="tag">HTML/CSS</span></div>
+        <button class="btn btn-ghost" style="margin-top:20px;width:100%;justify-content:center;" onclick="openModal('m-pokedex')">Voir les détails</button>
+      </div>
+      <div class="proj-card reveal reveal-delay-2">
+        <div class="proj-card-num">PROJET_03</div>
+        <h3>GSB Laravel</h3>
+        <p>Application web de gestion des frais professionnels des visiteurs médicaux. Architecture MVC Laravel, double rôle visiteur / gestionnaire, authentification par middleware.</p>
+        <div class="tags"><span class="tag">Laravel</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">MVC</span></div>
+        <button class="btn btn-ghost" style="margin-top:20px;width:100%;justify-content:center;" onclick="openModal('m-gsb1')">Voir les détails</button>
+      </div>
+      <div class="proj-card reveal reveal-delay-3">
+        <div class="proj-card-num">PROJET_04</div>
+        <h3>GSB Rapports</h3>
+        <p>Application desktop Windows en C# WinForms pour la gestion des rapports de visites médicales. Connexion SQL Server via ADO.NET.</p>
+        <div class="tags"><span class="tag">C#</span><span class="tag">WinForms</span><span class="tag">SQL Server</span><span class="tag">ADO.NET</span></div>
+        <button class="btn btn-ghost" style="margin-top:20px;width:100%;justify-content:center;" onclick="openModal('m-gsb2')">Voir les détails</button>
+      </div>
+    </div>
+
+    <!-- UPLOADS projets GSB (preuves compétences) -->
+    
+
+    
+
+    
+
+    <!-- GÉNÉRATION DE TICKETS — compétence "Répondre aux incidents" -->
+    <div class="ticket-section reveal" style="padding:28px 32px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:#8b5cf6;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:12px;">Compétence — Répondre aux incidents et demandes</div>
+      <h2 style="color:var(--white);margin-bottom:12px;">Génération de tickets</h2>
+      <p style="color:var(--muted);font-size:0.87rem;line-height:1.8;margin-bottom:12px;">
+        Dans le cadre de ma formation (2026), j'ai pratiqué la <strong style="color:var(--white);">gestion de tickets</strong> :
+        collecte, suivi et orientation des demandes d'assistance informatique.
+        Cette activité valide la compétence <strong style="color:var(--white);">"Répondre aux incidents et aux demandes d'assistance et d'évolution"</strong> du référentiel BTS SIO.
+      </p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+        <li style="color:var(--muted);font-size:0.86rem;padding-left:20px;position:relative;"><span style="position:absolute;left:0;color:#8b5cf6;">▸</span>Collecte et identification des demandes utilisateurs</li>
+        <li style="color:var(--muted);font-size:0.86rem;padding-left:20px;position:relative;"><span style="position:absolute;left:0;color:#8b5cf6;">▸</span>Suivi et orientation vers les bons interlocuteurs</li>
+        <li style="color:var(--muted);font-size:0.86rem;padding-left:20px;position:relative;"><span style="position:absolute;left:0;color:#8b5cf6;">▸</span>Traitement des demandes concernant les applications</li>
+        <li style="color:var(--muted);font-size:0.86rem;padding-left:20px;position:relative;"><span style="position:absolute;left:0;color:#8b5cf6;">▸</span>Rédaction de comptes-rendus d'intervention</li>
+      </ul>
+      <div id="gallery-tickets" class="screenshot-gallery"></div>
+      <label class="upload-zone" for="upload-tickets" style="border-color:rgba(139,92,246,0.3);">
+        <span class="upload-icon">🎫</span>
+        <span class="upload-text">Ajouter des captures — Tickets (outil de ticketing, captures d'écran)<br><small>PNG, JPG acceptés</small></span>
+        <input type="file" id="upload-tickets" accept="image/*" multiple style="display:none;" onchange="addScreenshots('gallery-tickets', this.files)">
+      </label>
+    </div>
+
+  </div><!-- /tab-projets -->
+
+  <!-- ═══ TAB 2 — FICHES E6 ═══ -->
+  <div id="tab-e6" class="tab-panel">
+
+    <p style="color:var(--muted);font-size:0.88rem;line-height:1.8;max-width:680px;">
+      L'épreuve E6 s'appuie sur <strong style="color:var(--white);">deux réalisations professionnelles</strong> couvrant les compétences du bloc 2 SLAM :
+      concevoir et développer une solution applicative · assurer la maintenance · gérer les données.
+    </p>
+
+    <!-- FICHE 1 — GSB LARAVEL -->
+    <div class="fiche">
+      <div class="fiche-head">
+        <div>
+          <div class="fiche-head-eyebrow">Réalisation professionnelle N°1 — Annexe 9-1 SLAM</div>
+          <h2>Développement de l'application GSB Laravel</h2>
+        </div>
+        <div class="fiche-num">01</div>
+      </div>
+      <div class="fiche-meta">
+        <div><label>Nom, prénom</label><span>BELLAHCENE Mohamed-Rahim</span></div>
+        <div><label>N° candidat</label><span style="color:var(--muted);">À compléter</span></div>
+        <div><label>Date</label><span>2024 / 2025</span></div>
+        <div><label>Organisation support</label><span>Galaxy Swiss Bourdin (GSB) — BTS Formation</span></div>
+        <div><label>Période</label><span>01/09/24 — 31/05/25</span></div>
+        <div><label>Lieu</label><span>Lycée Voillaume</span></div>
+        <div><label>Modalité</label><span class="badge">✓ Seul(e)</span></div>
+      </div>
+      <div class="fiche-body">
+        <div class="fsec">
+          <div class="fsec-label">Compétences travaillées</div>
+          <div class="comp-list">
+            <div class="comp-item"><div class="cbox">✓</div><div class="ctext">Concevoir et développer une solution applicative<small>Architecture MVC Laravel complète : modèles, contrôleurs, vues Blade, routes, middleware — 2 rôles distincts</small></div></div>
+            <div class="comp-item"><div class="cbox">✓</div><div class="ctext">Assurer la maintenance corrective ou évolutive<small>Ajout de la gestion des états de remboursement, corrections, évolutions fonctionnelles</small></div></div>
+            <div class="comp-item"><div class="cbox">✓</div><div class="ctext">Gérer les données<small>visiteur · fichefrais · lignefraisforfait · etat · gestionnaire — MySQL via Eloquent ORM</small></div></div>
+          </div>
+        </div>
+        <div class="fsec">
+          <div class="fsec-label">Conditions de réalisation</div>
+          <p>Contexte fictif <strong class="hl">Galaxy Swiss Bourdin (GSB)</strong> — gestion des frais professionnels des visiteurs médicaux.</p>
+          <ul>
+            <li>Authentification avec rôles distincts visiteur / gestionnaire</li>
+            <li>Saisie et modification des fiches de frais par les visiteurs</li>
+            <li>Consultation et validation des fiches par les gestionnaires</li>
+            <li>Gestion complète des états de remboursement</li>
+          </ul>
+        </div>
+        <div class="fsec">
+          <div class="fsec-label">Ressources</div>
+          <div class="res-grid">
+            <div class="res-item"><label>Langages</label><div class="tags"><span class="tag">PHP 8</span><span class="tag">HTML/CSS</span></div></div>
+            <div class="res-item"><label>Framework</label><div class="tags"><span class="tag">Laravel</span><span class="tag">Blade</span></div></div>
+            <div class="res-item"><label>Base de données</label><div class="tags"><span class="tag">MySQL</span><span class="tag">Eloquent</span></div></div>
+            <div class="res-item"><label>Outils</label><div class="tags"><span class="tag">VS Code</span><span class="tag">Laragon</span><span class="tag">Git</span></div></div>
+          </div>
+        </div>
+        <div class="fsec">
+          <div class="fsec-label">Accès &amp; documentation</div>
+          <div class="acces">
+            <div class="acces-row"><label>GitHub</label><a href="https://github.com/RDZrahimster2006/gsbLaravel" target="_blank">github.com/RDZrahimster2006/gsbLaravel</a></div>
+            <div class="acces-row"><label>Schéma BDD</label><span>visiteur · fichefrais · lignefraisforfait · etat · gestionnaire</span></div>
+          </div>
+          <div id="gallery-e6-gsb1" class="screenshot-gallery" style="margin-top:14px;"></div>
+          <label class="upload-zone" for="upload-e6-gsb1" style="margin-top:10px;">
+            <span class="upload-icon">📸</span>
+            <span class="upload-text">Captures d'écran — GSB Laravel (E6)<br><small>PNG, JPG acceptés</small></span>
+            <input type="file" id="upload-e6-gsb1" accept="image/*" multiple style="display:none;" onchange="addScreenshots('gallery-e6-gsb1', this.files)">
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="sep"><span>RÉALISATION N°2</span></div>
+
+    <!-- FICHE 2 — GSB RAPPORTS C# -->
+    <div class="fiche f2">
+      <div class="fiche-head">
+        <div>
+          <div class="fiche-head-eyebrow">Réalisation professionnelle N°2 — Annexe 9-1 SLAM</div>
+          <h2>Développement de l'application GSB Rapports (C#)</h2>
+        </div>
+        <div class="fiche-num">02</div>
+      </div>
+      <div class="fiche-meta">
+        <div><label>Nom, prénom</label><span>BELLAHCENE Mohamed-Rahim</span></div>
+        <div><label>N° candidat</label><span style="color:var(--muted);">À compléter</span></div>
+        <div><label>Date</label><span>2024 / 2025</span></div>
+        <div><label>Organisation support</label><span>Galaxy Swiss Bourdin (GSB) — BTS Formation</span></div>
+        <div><label>Période</label><span>01/09/24 — 31/05/25</span></div>
+        <div><label>Lieu</label><span>Lycée Voillaume</span></div>
+        <div><label>Modalité</label><span class="badge">✓ Seul(e)</span></div>
+      </div>
+      <div class="fiche-body">
+        <div class="fsec">
+          <div class="fsec-label">Compétences travaillées</div>
+          <div class="comp-list">
+            <div class="comp-item"><div class="cbox">✓</div><div class="ctext">Concevoir et développer une solution applicative<small>C# WinForms — architecture orientée objet, interface graphique, connexion BDD via ADO.NET</small></div></div>
+            <div class="comp-item"><div class="cbox">✓</div><div class="ctext">Assurer la maintenance corrective ou évolutive<small>Ajout de fonctionnalités, correction de bugs, optimisation des requêtes SQL</small></div></div>
+            <div class="comp-item"><div class="cbox">✓</div><div class="ctext">Gérer les données<small>visiteur · rapport · medecin · medicament · famille · offrir — SQL Server via ADO.NET</small></div></div>
+          </div>
+        </div>
+        <div class="fsec">
+          <div class="fsec-label">Conditions de réalisation</div>
+          <p>Application Windows pour la gestion des rapports de visites médicales des visiteurs <strong class="hl">GSB</strong>.</p>
+          <ul>
+            <li>Interface graphique Windows avec authentification visiteur</li>
+            <li>Affichage et consultation des rapports de visite</li>
+            <li>Gestion des médecins, médicaments et familles</li>
+            <li>Connexion sécurisée à SQL Server via ADO.NET</li>
+          </ul>
+        </div>
+        <div class="fsec">
+          <div class="fsec-label">Ressources</div>
+          <div class="res-grid">
+            <div class="res-item"><label>Langage</label><div class="tags"><span class="tag">C# .NET</span></div></div>
+            <div class="res-item"><label>Interface</label><div class="tags"><span class="tag">WinForms</span></div></div>
+            <div class="res-item"><label>Base de données</label><div class="tags"><span class="tag">SQL Server</span><span class="tag">ADO.NET</span></div></div>
+            <div class="res-item"><label>Outils</label><div class="tags"><span class="tag">Visual Studio</span><span class="tag">Git</span></div></div>
+          </div>
+        </div>
+        <div class="fsec">
+          <div class="fsec-label">Accès &amp; documentation</div>
+          <div class="acces">
+            <div class="acces-row"><label>GitHub</label><a href="https://github.com/RDZrahimster2006/GsbRapports" target="_blank">github.com/RDZrahimster2006/GsbRapports</a></div>
+            <div class="acces-row"><label>Schéma BDD</label><span>visiteur · rapport · medecin · medicament · famille · offrir</span></div>
+          </div>
+          <div id="gallery-e6-gsb2" class="screenshot-gallery" style="margin-top:14px;"></div>
+          <label class="upload-zone" for="upload-e6-gsb2" style="margin-top:10px;">
+            <span class="upload-icon">📸</span>
+            <span class="upload-text">Captures d'écran — GSB Rapports C# (E6)<br><small>PNG, JPG acceptés</small></span>
+            <input type="file" id="upload-e6-gsb2" accept="image/*" multiple style="display:none;" onchange="addScreenshots('gallery-e6-gsb2', this.files)">
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-e6 -->
+
+</div><!-- /page-wrap -->
+
+<!-- MODALS -->
+<div id="m-gsb1" class="modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('m-gsb1')">✕</button>
+    <h2>GSB Laravel</h2>
+    <div class="modal-section"><div class="modal-label">Technologies</div><div class="tags" style="margin-top:0;"><span class="tag">Laravel</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">MVC</span><span class="tag">Blade</span></div></div>
+    <div class="modal-section"><div class="modal-label">Base de données</div><ul class="modal-list"><li>visiteur</li><li>fichefrais</li><li>lignefraisforfait</li><li>etat</li><li>gestionnaire</li></ul></div>
+    <div class="modal-section"><div class="modal-label">Fonctionnalités</div><ul class="modal-list"><li>Authentification visiteur / gestionnaire</li><li>Saisie et consultation des fiches de frais</li><li>Gestion des états de remboursement</li><li>Interface d'administration gestionnaire</li></ul></div>
+    
+    <div class="modal-upload">
+      <div class="modal-label">Captures d'écran</div>
+      <div id="mg-gsb1" class="modal-gallery"></div>
+      <label for="mu-gsb1">📸 <span>Ajouter des captures — GSB Laravel</span><input type="file" id="mu-gsb1" accept="image/*" multiple style="display:none;" onchange="addScreenshots('mg-gsb1',this.files)"></label>
+    </div>
+    <a href="https://github.com/RDZrahimster2006/gsbLaravel" target="_blank" class="btn btn-glow" style="display:inline-flex;text-decoration:none;margin-top:12px;">Voir sur GitHub →</a>
+  </div>
+</div>
+<div id="m-gsb2" class="modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('m-gsb2')">✕</button>
+    <h2>GSB Rapports</h2>
+    <div class="modal-section"><div class="modal-label">Technologies</div><div class="tags" style="margin-top:0;"><span class="tag">C#</span><span class="tag">WinForms</span><span class="tag">SQL Server</span><span class="tag">ADO.NET</span></div></div>
+    <div class="modal-section"><div class="modal-label">Base de données</div><ul class="modal-list"><li>visiteur</li><li>rapport</li><li>medecin</li><li>medicament</li><li>famille</li><li>offrir</li></ul></div>
+    <div class="modal-section"><div class="modal-label">Fonctionnalités</div><ul class="modal-list"><li>Affichage et gestion des rapports de visite</li><li>Gestion des visiteurs médicaux</li><li>Connexion SQL Server via ADO.NET</li><li>Interface graphique desktop Windows</li></ul></div>
+    
+    <div class="modal-upload">
+      <div class="modal-label">Captures d'écran</div>
+      <div id="mg-gsb2" class="modal-gallery"></div>
+      <label for="mu-gsb2">📸 <span>Ajouter des captures — GSB Rapports</span><input type="file" id="mu-gsb2" accept="image/*" multiple style="display:none;" onchange="addScreenshots('mg-gsb2',this.files)"></label>
+    </div>
+    <a href="https://github.com/RDZrahimster2006/GsbRapports" target="_blank" class="btn btn-glow" style="display:inline-flex;text-decoration:none;margin-top:12px;">Voir sur GitHub →</a>
+  </div>
+</div>
+<div id="m-pong" class="modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('m-pong')">✕</button>
+    <h2>Jeu Pong</h2>
+    <div class="modal-section"><div class="modal-label">Technologies</div><div class="tags" style="margin-top:0;"><span class="tag">JavaScript</span><span class="tag">HTML Canvas</span><span class="tag">CSS</span></div></div>
+    <div class="modal-section"><div class="modal-label">Compétences prouvées</div><ul class="modal-list"><li>Gestion du patrimoine informatique — développement d'une solution fonctionnelle</li><li>Boucle de jeu (game loop) en JavaScript</li><li>Logique de collision et gestion du score</li><li>Manipulation du canvas HTML5</li></ul></div>
+
+    <div class="modal-upload">
+      <div class="modal-label">Captures d'écran</div>
+      <div id="mg-pong" class="modal-gallery"></div>
+      <label for="mu-pong">📸 <span>Ajouter des captures — Pong</span><input type="file" id="mu-pong" accept="image/*" multiple style="display:none;" onchange="addScreenshots('mg-pong',this.files)"></label>
+    </div>
+
+  </div>
+</div>
+<div id="m-pokedex" class="modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('m-pokedex')">✕</button>
+    <h2>Pokédex API</h2>
+    <div class="modal-section"><div class="modal-label">Technologies</div><div class="tags" style="margin-top:0;"><span class="tag">JavaScript</span><span class="tag">API REST</span><span class="tag">JSON</span><span class="tag">HTML/CSS</span></div></div>
+    <div class="modal-section"><div class="modal-label">Compétences prouvées</div><ul class="modal-list"><li>Consommation d'une API REST (PokéAPI)</li><li>Affichage dynamique de données JSON</li><li>Présence en ligne — interface web interactive</li><li>Filtres et recherche en temps réel</li></ul></div>
+
+    <div class="modal-upload">
+      <div class="modal-label">Captures d'écran</div>
+      <div id="mg-pokedex" class="modal-gallery"></div>
+      <label for="mu-pokedex">📸 <span>Ajouter des captures — Pokédex</span><input type="file" id="mu-pokedex" accept="image/*" multiple style="display:none;" onchange="addScreenshots('mg-pokedex',this.files)"></label>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 BELLAHCENE Mohamed-Rahim — BTS SIO SLAM</footer>
+<script src="main.js"></script>
+<script>
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+<div id="lightbox">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+<script>
+function addScreenshots(galleryId, files) {
+  const gallery = document.getElementById(galleryId);
+  Array.from(files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const thumb = document.createElement('div');
+      thumb.className = 'screenshot-thumb';
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.alt = file.name;
+      img.onclick = () => openLightbox(e.target.result);
+      const del = document.createElement('button');
+      del.className = 'del-btn';
+      del.textContent = '✕';
+      del.onclick = ev => { ev.stopPropagation(); thumb.remove(); };
+      thumb.appendChild(img);
+      thumb.appendChild(del);
+      gallery.appendChild(thumb);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+document.querySelectorAll('.upload-zone').forEach(zone => {
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor = 'var(--cyan)'; });
+  zone.addEventListener('dragleave', () => { zone.style.borderColor = ''; });
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.style.borderColor = '';
+    const input = zone.querySelector('input[type="file"]');
+    const galleryId = input.id.replace('upload-', 'gallery-');
+    addScreenshots(galleryId, e.dataTransfer.files);
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veille technologique — MRB Portfolio</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.veille-schema{width:100%;max-width:760px;margin:20px auto 0;display:block;}
+.veille-intro{font-size:0.9rem;color:var(--muted);line-height:1.8;margin-bottom:6px;}
+.outils-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:6px;}
+.outil-card{background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;transition:border-color 0.2s;}
+.outil-card:hover{border-color:rgba(0,245,255,0.3);}
+.outil-name{font-family:'JetBrains Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--cyan);letter-spacing:0.1em;margin-bottom:6px;}
+.outil-desc{font-size:0.78rem;color:var(--muted);line-height:1.5;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+.oral-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:3px 10px;border-radius:100px;border:1px solid var(--cyan);color:var(--cyan);background:rgba(0,245,255,0.06);margin-bottom:12px;}
+</style>
+</head>
+<body>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<canvas id="bg-canvas"></canvas>
+<div id="loader">
+  <div class="loader-logo">VEILLE</div>
+  <div class="loader-progress"><div class="loader-fill" id="loader-fill"></div></div>
+  <div class="loader-pct" id="loader-pct">0%</div>
+</div>
+<header class="navbar">
+  <div class="logo"><a href="index.html">MRB</a></div>
+  <nav class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="presentation.html">Présentation</a>
+    <a href="competences.html">Compétences</a>
+    <a href="missions.html">Missions</a>
+    <a href="stages.html">Stages</a>
+    <a href="veille.html">Veille</a>
+    
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="page-wrap">
+
+  <div class="section-header reveal">
+    <div class="section-eyebrow">05 — Veille technologique</div>
+    <h1 class="section-title">No-Code &amp; IA</h1>
+  </div>
+
+  <!-- BLOC 1 : Sujet -->
+  <div class="glass reveal reveal-delay-1">
+    <div class="oral-badge">🎙 Partie 1 — 1 min</div>
+    <h2>Sujet &amp; Pourquoi ce choix ?</h2>
+    <p class="veille-intro">
+      J'ai suivi l'évolution des outils permettant de <strong>créer des applications sans écrire de code</strong>,
+      grâce aux plateformes No-Code/Low-Code et à l'intelligence artificielle générative.
+      Cette veille a été conduite sur toute la durée de ma formation BTS SIO (2024–2026),
+      en m'appuyant sur des sources variées : articles techniques, sites officiels des plateformes,
+      retours d'expérience professionnels et presse spécialisée.
+    </p>
+    <p class="veille-intro">
+      Ce sujet m'a intéressé car il touche directement mon domaine : en tant que développeur en formation,
+      je voulais comprendre si ces outils allaient <strong>remplacer ou simplement compléter</strong> le code traditionnel.
+      La question est aussi stratégique : dans un contexte où de nombreuses entreprises cherchent
+      à réduire les coûts de développement, comprendre les limites du no-code est devenu
+      une compétence professionnelle à part entière.
+    </p>
+  </div>
+
+  <!-- BLOC 2 : Schéma de fonctionnement -->
+  <div class="glass reveal reveal-delay-2">
+    <div class="oral-badge">🎙 Partie 2 — 1 min</div>
+    <h2>Comment ça fonctionne ?</h2>
+
+    <!-- SVG SCHEMA -->
+    <svg class="veille-schema" viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" style="font-family:monospace;">
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#00f5ff" opacity="0.7"/>
+        </marker>
+      </defs>
+
+      <!-- Utilisateur -->
+      <rect x="10" y="90" width="140" height="80" rx="10" fill="rgba(0,245,255,0.06)" stroke="#00f5ff" stroke-width="1.5" stroke-opacity="0.4"/>
+      <text x="80" y="124" text-anchor="middle" fill="#00f5ff" font-size="11" font-weight="bold">UTILISATEUR</text>
+      <text x="80" y="142" text-anchor="middle" fill="#8892a4" font-size="10">"Crée-moi une app</text>
+      <text x="80" y="156" text-anchor="middle" fill="#8892a4" font-size="10">de gestion de tâches"</text>
+
+      <!-- Flèche 1 -->
+      <line x1="152" y1="130" x2="198" y2="130" stroke="#00f5ff" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
+      <text x="175" y="120" text-anchor="middle" fill="#8892a4" font-size="9">Prompt</text>
+
+      <!-- Plateforme IA / No-Code -->
+      <rect x="200" y="70" width="160" height="120" rx="10" fill="rgba(65,105,255,0.08)" stroke="#4169ff" stroke-width="1.5" stroke-opacity="0.5"/>
+      <text x="280" y="100" text-anchor="middle" fill="#4169ff" font-size="11" font-weight="bold">PLATEFORME</text>
+      <text x="280" y="116" text-anchor="middle" fill="#4169ff" font-size="11" font-weight="bold">NO-CODE / IA</text>
+      <text x="280" y="136" text-anchor="middle" fill="#8892a4" font-size="9">LLM (GPT, Claude…)</text>
+      <text x="280" y="150" text-anchor="middle" fill="#8892a4" font-size="9">Générateur de code</text>
+      <text x="280" y="164" text-anchor="middle" fill="#8892a4" font-size="9">Interface drag &amp; drop</text>
+
+      <!-- Flèche 2 -->
+      <line x1="362" y1="130" x2="408" y2="130" stroke="#4169ff" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
+      <text x="385" y="120" text-anchor="middle" fill="#8892a4" font-size="9">Génère</text>
+
+      <!-- Code / App générée -->
+      <rect x="410" y="70" width="150" height="120" rx="10" fill="rgba(139,92,246,0.08)" stroke="#8b5cf6" stroke-width="1.5" stroke-opacity="0.5"/>
+      <text x="485" y="100" text-anchor="middle" fill="#8b5cf6" font-size="11" font-weight="bold">CODE GÉNÉRÉ</text>
+      <text x="485" y="120" text-anchor="middle" fill="#8892a4" font-size="9">HTML / CSS / JS</text>
+      <text x="485" y="135" text-anchor="middle" fill="#8892a4" font-size="9">Backend (Node / PHP)</text>
+      <text x="485" y="150" text-anchor="middle" fill="#8892a4" font-size="9">BDD intégrée</text>
+      <text x="485" y="165" text-anchor="middle" fill="#8892a4" font-size="9">APIs préconfigurées</text>
+
+      <!-- Flèche 3 -->
+      <line x1="562" y1="130" x2="608" y2="130" stroke="#8b5cf6" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
+      <text x="585" y="120" text-anchor="middle" fill="#8892a4" font-size="9">Déploie</text>
+
+      <!-- Application finale -->
+      <rect x="610" y="90" width="140" height="80" rx="10" fill="rgba(0,245,255,0.06)" stroke="#00f5ff" stroke-width="1.5" stroke-opacity="0.4"/>
+      <text x="680" y="124" text-anchor="middle" fill="#00f5ff" font-size="11" font-weight="bold">APPLICATION</text>
+      <text x="680" y="142" text-anchor="middle" fill="#8892a4" font-size="10">Fonctionnelle</text>
+      <text x="680" y="156" text-anchor="middle" fill="#8892a4" font-size="10">sans coder</text>
+
+      <!-- Labels bas -->
+      <text x="80" y="200" text-anchor="middle" fill="#8892a4" font-size="9" font-style="italic">Aucune compétence</text>
+      <text x="80" y="212" text-anchor="middle" fill="#8892a4" font-size="9" font-style="italic">technique requise</text>
+      <text x="280" y="210" text-anchor="middle" fill="#4169ff" font-size="9">Builder.ai · AppSheet</text>
+      <text x="280" y="222" text-anchor="middle" fill="#4169ff" font-size="9">Glide · Appy Pie</text>
+    </svg>
+  </div>
+
+  <!-- BLOC 3 : Outils étudiés -->
+  <div class="glass reveal reveal-delay-3">
+    <h2>Outils étudiés</h2>
+    <div class="outils-grid">
+      <div class="outil-card">
+        <div class="outil-name">Builder.ai</div>
+        <div class="outil-desc">Décrit ton app en langage naturel → IA génère le code + déploiement automatique.</div>
+      </div>
+      <div class="outil-card">
+        <div class="outil-name">Google AppSheet</div>
+        <div class="outil-desc">Crée des apps depuis Google Sheets sans code. Utilisé en entreprise pour PME.</div>
+      </div>
+      <div class="outil-card">
+        <div class="outil-name">Glide</div>
+        <div class="outil-desc">Application mobile générée depuis un tableur. Interface drag &amp; drop intuitive.</div>
+      </div>
+      <div class="outil-card">
+        <div class="outil-name">Appy Pie</div>
+        <div class="outil-desc">Générateur d'apps mobiles iOS/Android sans écrire une ligne de code.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOC 4 : Avantages / Limites -->
+  <div class="reveal reveal-delay-4">
+    <div class="oral-badge">🎙 Partie 3 — 1 min</div>
+    <div class="two-col">
+      <div class="glass" style="transform:none;">
+        <h2 style="color:#00f5ff;">✔ Avantages</h2>
+        <ul>
+          <li>Application créée en quelques heures</li>
+          <li>Accessible sans formation technique</li>
+          <li>Idéal pour prototype / test rapide</li>
+          <li>Coût très réduit pour les TPE/PME</li>
+          <li>Mises à jour simplifiées</li>
+        </ul>
+      </div>
+      <div class="glass" style="transform:none;">
+        <h2 style="color:#ff6b6b;">✘ Limites</h2>
+        <ul>
+          <li>Personnalisation avancée bloquée</li>
+          <li>Performances limitées à grande échelle</li>
+          <li>Sécurité difficile à maîtriser</li>
+          <li>Dépendance forte à la plateforme</li>
+          <li>Migration complexe si on veut partir</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOC 5 : Conclusion -->
+  <div class="glass reveal reveal-delay-5">
+    <h2>Conclusion &amp; lien avec ma formation</h2>
+    <p>
+      Ces outils <strong>ne remplacent pas le développeur</strong> — ils accélèrent certaines tâches.
+      Pour des applications complexes, sécurisées et maintenables, le code traditionnel reste indispensable.
+    </p>
+    <p>
+      En tant que futur développeur orienté cybersécurité, cette veille m'a appris à analyser
+      les risques liés aux plateformes tierces et à comprendre pourquoi la maîtrise du code source
+      reste un avantage stratégique.
+    </p>
+
+    <h3 style="margin-top:20px;">Sources</h3>
+    <ul>
+      <li><a href="https://www.builder.ai" target="_blank">Builder.ai</a></li>
+      <li><a href="https://www.appsheet.com" target="_blank">Google AppSheet</a></li>
+      <li><a href="https://www.glideapps.com" target="_blank">Glide</a></li>
+      <li><a href="https://www.appypie.com" target="_blank">Appy Pie</a></li>
+      <li>Business Insider (2025) — article sur la création d'apps sans code par IA</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>© 2026 BELLAHCENE Mohamed-Rahim</footer>
+<script src="main.js"></script>
+</body>
+</html>
