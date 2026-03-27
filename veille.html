@@ -16,6 +16,176 @@
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
 .oral-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:3px 10px;border-radius:100px;border:1px solid var(--cyan);color:var(--cyan);background:rgba(0,245,255,0.06);margin-bottom:12px;}
+
+/* ─── PDF BUTTON ─── */
+.pdf-trigger-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+
+.btn-pdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 22px;
+  background: rgba(0,245,255,0.07);
+  border: 1px solid rgba(0,245,255,0.35);
+  border-radius: 8px;
+  color: #00f5ff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+  text-decoration: none;
+}
+.btn-pdf:hover {
+  background: rgba(0,245,255,0.14);
+  border-color: rgba(0,245,255,0.7);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0,245,255,0.15);
+}
+.btn-pdf svg {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+.btn-pdf-hint {
+  font-size: 0.75rem;
+  color: var(--muted, #8892a4);
+}
+
+/* ─── MODAL OVERLAY ─── */
+.pdf-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(0,0,0,0.82);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.pdf-modal-backdrop.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.pdf-modal {
+  position: relative;
+  width: min(900px, 94vw);
+  height: min(88vh, 820px);
+  background: #0d1117;
+  border: 1px solid rgba(0,245,255,0.2);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,245,255,0.06);
+  transform: translateY(18px) scale(0.97);
+  transition: transform 0.28s cubic-bezier(.22,1,.36,1);
+}
+.pdf-modal-backdrop.is-open .pdf-modal {
+  transform: translateY(0) scale(1);
+}
+
+.pdf-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: rgba(0,245,255,0.03);
+  flex-shrink: 0;
+}
+.pdf-modal-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #00f5ff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pdf-modal-title::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00f5ff;
+  animation: blink 1.4s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.pdf-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pdf-btn-close {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  color: #8892a4;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+.pdf-btn-close:hover { background: rgba(255,80,80,0.15); color: #ff6b6b; border-color: rgba(255,80,80,0.3); }
+
+.pdf-btn-dl {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(0,245,255,0.25);
+  background: rgba(0,245,255,0.06);
+  color: #00f5ff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.pdf-btn-dl:hover { background: rgba(0,245,255,0.14); }
+
+.pdf-modal-body {
+  flex: 1;
+  overflow: hidden;
+}
+.pdf-modal-body iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* Slide counter dots */
+.pdf-slide-info {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: rgba(0,245,255,0.5);
+  letter-spacing: 0.05em;
+}
 </style>
 </head>
 <body>
@@ -36,7 +206,6 @@
     <a href="missions.html">Missions</a>
     <a href="stages.html">Stages</a>
     <a href="veille.html">Veille</a>
-    
     <a href="contact.html">Contact</a>
   </nav>
 </header>
@@ -50,7 +219,6 @@
 
   <!-- BLOC 1 : Sujet -->
   <div class="glass reveal reveal-delay-1">
-    <div class="oral-badge">🎙 Partie 1 — 1 min</div>
     <h2>Sujet &amp; Pourquoi ce choix ?</h2>
     <p class="veille-intro">
       J'ai suivi l'évolution des outils permettant de <strong>créer des applications sans écrire de code</strong>,
@@ -66,62 +234,59 @@
       à réduire les coûts de développement, comprendre les limites du no-code est devenu
       une compétence professionnelle à part entière.
     </p>
+
+    <!-- ─── BOUTON PDF ─── -->
+    <div class="pdf-trigger-wrap">
+      <button class="btn-pdf" id="openPdfBtn" onclick="openPdfModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+          <polyline points="10 9 9 9 8 9"/>
+        </svg>
+        Voir la présentation PDF
+      </button>
+      <span class="btn-pdf-hint">7 slides · veille complète</span>
+    </div>
   </div>
 
   <!-- BLOC 2 : Schéma de fonctionnement -->
   <div class="glass reveal reveal-delay-2">
-    <div class="oral-badge">🎙 Partie 2 — 1 min</div>
     <h2>Comment ça fonctionne ?</h2>
 
-    <!-- SVG SCHEMA -->
     <svg class="veille-schema" viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" style="font-family:monospace;">
       <defs>
         <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
           <path d="M0,0 L0,6 L8,3 z" fill="#00f5ff" opacity="0.7"/>
         </marker>
       </defs>
-
-      <!-- Utilisateur -->
       <rect x="10" y="90" width="140" height="80" rx="10" fill="rgba(0,245,255,0.06)" stroke="#00f5ff" stroke-width="1.5" stroke-opacity="0.4"/>
       <text x="80" y="124" text-anchor="middle" fill="#00f5ff" font-size="11" font-weight="bold">UTILISATEUR</text>
       <text x="80" y="142" text-anchor="middle" fill="#8892a4" font-size="10">"Crée-moi une app</text>
       <text x="80" y="156" text-anchor="middle" fill="#8892a4" font-size="10">de gestion de tâches"</text>
-
-      <!-- Flèche 1 -->
       <line x1="152" y1="130" x2="198" y2="130" stroke="#00f5ff" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
       <text x="175" y="120" text-anchor="middle" fill="#8892a4" font-size="9">Prompt</text>
-
-      <!-- Plateforme IA / No-Code -->
       <rect x="200" y="70" width="160" height="120" rx="10" fill="rgba(65,105,255,0.08)" stroke="#4169ff" stroke-width="1.5" stroke-opacity="0.5"/>
       <text x="280" y="100" text-anchor="middle" fill="#4169ff" font-size="11" font-weight="bold">PLATEFORME</text>
       <text x="280" y="116" text-anchor="middle" fill="#4169ff" font-size="11" font-weight="bold">NO-CODE / IA</text>
       <text x="280" y="136" text-anchor="middle" fill="#8892a4" font-size="9">LLM (GPT, Claude…)</text>
       <text x="280" y="150" text-anchor="middle" fill="#8892a4" font-size="9">Générateur de code</text>
       <text x="280" y="164" text-anchor="middle" fill="#8892a4" font-size="9">Interface drag &amp; drop</text>
-
-      <!-- Flèche 2 -->
       <line x1="362" y1="130" x2="408" y2="130" stroke="#4169ff" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
       <text x="385" y="120" text-anchor="middle" fill="#8892a4" font-size="9">Génère</text>
-
-      <!-- Code / App générée -->
       <rect x="410" y="70" width="150" height="120" rx="10" fill="rgba(139,92,246,0.08)" stroke="#8b5cf6" stroke-width="1.5" stroke-opacity="0.5"/>
       <text x="485" y="100" text-anchor="middle" fill="#8b5cf6" font-size="11" font-weight="bold">CODE GÉNÉRÉ</text>
       <text x="485" y="120" text-anchor="middle" fill="#8892a4" font-size="9">HTML / CSS / JS</text>
       <text x="485" y="135" text-anchor="middle" fill="#8892a4" font-size="9">Backend (Node / PHP)</text>
       <text x="485" y="150" text-anchor="middle" fill="#8892a4" font-size="9">BDD intégrée</text>
       <text x="485" y="165" text-anchor="middle" fill="#8892a4" font-size="9">APIs préconfigurées</text>
-
-      <!-- Flèche 3 -->
       <line x1="562" y1="130" x2="608" y2="130" stroke="#8b5cf6" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
       <text x="585" y="120" text-anchor="middle" fill="#8892a4" font-size="9">Déploie</text>
-
-      <!-- Application finale -->
       <rect x="610" y="90" width="140" height="80" rx="10" fill="rgba(0,245,255,0.06)" stroke="#00f5ff" stroke-width="1.5" stroke-opacity="0.4"/>
       <text x="680" y="124" text-anchor="middle" fill="#00f5ff" font-size="11" font-weight="bold">APPLICATION</text>
       <text x="680" y="142" text-anchor="middle" fill="#8892a4" font-size="10">Fonctionnelle</text>
       <text x="680" y="156" text-anchor="middle" fill="#8892a4" font-size="10">sans coder</text>
-
-      <!-- Labels bas -->
       <text x="80" y="200" text-anchor="middle" fill="#8892a4" font-size="9" font-style="italic">Aucune compétence</text>
       <text x="80" y="212" text-anchor="middle" fill="#8892a4" font-size="9" font-style="italic">technique requise</text>
       <text x="280" y="210" text-anchor="middle" fill="#4169ff" font-size="9">Builder.ai · AppSheet</text>
@@ -154,7 +319,6 @@
 
   <!-- BLOC 4 : Avantages / Limites -->
   <div class="reveal reveal-delay-4">
-    <div class="oral-badge">🎙 Partie 3 — 1 min</div>
     <div class="two-col">
       <div class="glass" style="transform:none;">
         <h2 style="color:#00f5ff;">✔ Avantages</h2>
@@ -205,6 +369,74 @@
 </div>
 
 <footer>© 2026 BELLAHCENE Mohamed-Rahim</footer>
+
+<!-- ─── PDF MODAL ─── -->
+<div class="pdf-modal-backdrop" id="pdfModalBackdrop" onclick="closePdfOnBackdrop(event)">
+  <div class="pdf-modal" id="pdfModal">
+    <div class="pdf-modal-header">
+      <div class="pdf-modal-title">
+        Veille Technologique — Présentation PDF
+      </div>
+      <div class="pdf-modal-actions">
+        <span class="pdf-slide-info">7 slides</span>
+        <a class="pdf-btn-dl" href="Veille_Technologique___La_Création_d_Applications_Sans_Coder__1_.pdf" download title="Télécharger le PDF">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Télécharger
+        </a>
+        <button class="pdf-btn-close" onclick="closePdfModal()" title="Fermer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="pdf-modal-body">
+      <iframe
+        id="pdfIframe"
+        src=""
+        title="Veille Technologique PDF"
+        loading="lazy"
+      ></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  const PDF_SRC = "Veille_Technologique___La_Création_d_Applications_Sans_Coder__1_.pdf";
+
+  function openPdfModal() {
+    const backdrop = document.getElementById('pdfModalBackdrop');
+    const iframe   = document.getElementById('pdfIframe');
+    // Load the PDF only on first open
+    if (!iframe.src || iframe.src === window.location.href) {
+      iframe.src = PDF_SRC;
+    }
+    backdrop.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePdfModal() {
+    document.getElementById('pdfModalBackdrop').classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  function closePdfOnBackdrop(e) {
+    if (e.target === document.getElementById('pdfModalBackdrop')) {
+      closePdfModal();
+    }
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closePdfModal();
+  });
+</script>
+
 <script src="main.js"></script>
 </body>
 </html>
