@@ -763,90 +763,92 @@
     <div class="modal-section"><div class="modal-label">Compétences prouvées</div><ul class="modal-list"><li>Consommation d'une API REST (PokéAPI)</li><li>Affichage dynamique de données JSON</li><li>Présence en ligne — interface web interactive</li><li>Filtres et recherche en temps réel</li></ul></div>
 
     <div class="modal-upload">
-      <div class="modal-label">Captures d'écran</div>
-      <div id="mg-pokedex" class="modal-gallery">
+  <div class="modal-label">Captures d'écran</div>
+  <div id="mg-pokedex" class="modal-gallery" style="grid-template-columns:repeat(2,1fr);gap:10px;">
 
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" style="width:100%;height:auto;min-height:280px;border-radius:8px;margin-bottom:10px;display:block;">
-          <rect width="600" height="320" fill="#1a1a2e"/>
-          <rect x="0" y="0" width="600" height="48" fill="#16213e"/>
-          <text x="300" y="30" font-family="sans-serif" font-size="18" font-weight="700" fill="#e74c3c" text-anchor="middle">Pokédex</text>
-          <rect x="20" y="60" width="340" height="32" rx="6" fill="#0f3460"/>
-          <text x="36" y="81" font-family="sans-serif" font-size="13" fill="rgba(255,255,255,.4)">Rechercher un Pokémon...</text>
-          <rect x="372" y="60" width="208" height="32" rx="6" fill="#e74c3c"/>
-          <text x="476" y="81" font-family="sans-serif" font-size="13" fill="white" text-anchor="middle">Ajouter un Pokémon</text>
-          <rect x="20" y="108" width="560" height="30" rx="4" fill="#e74c3c"/>
-          <text x="70"  y="128" font-family="sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle">Image</text>
-          <text x="200" y="128" font-family="sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle">Nom</text>
-          <text x="360" y="128" font-family="sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle">Type</text>
-          <text x="500" y="128" font-family="sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle">Actions</text>
-          <rect x="20" y="138" width="560" height="44" fill="#0f3460"/>
-          <circle cx="70" cy="160" r="16" fill="#f1c40f" opacity=".9"/>
-          <text x="70" y="166" font-family="sans-serif" font-size="18" text-anchor="middle">⚡</text>
-          <text x="200" y="165" font-family="sans-serif" font-size="13" fill="#3498db" text-anchor="middle">Pikachu</text>
-          <rect x="320" y="148" width="80" height="22" rx="11" fill="#f1c40f"/>
-          <text x="360" y="163" font-family="sans-serif" font-size="11" fill="#7d6608" text-anchor="middle">Électrik</text>
-          <rect x="460" y="148" width="76" height="22" rx="4" fill="#16213e"/>
-          <text x="498" y="163" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,.6)" text-anchor="middle">Supprimer</text>
-          <rect x="20" y="182" width="560" height="44" fill="#0a0a1a"/>
-          <circle cx="70" cy="204" r="16" fill="#27ae60" opacity=".9"/>
-          <text x="70" y="210" font-family="sans-serif" font-size="18" text-anchor="middle">🌿</text>
-          <text x="200" y="209" font-family="sans-serif" font-size="13" fill="#3498db" text-anchor="middle">Bulbizarre</text>
-          <rect x="320" y="192" width="80" height="22" rx="11" fill="#27ae60"/>
-          <text x="360" y="207" font-family="sans-serif" font-size="11" fill="#1a5c33" text-anchor="middle">Plante</text>
-          <rect x="460" y="192" width="76" height="22" rx="4" fill="#16213e"/>
-          <text x="498" y="207" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,.6)" text-anchor="middle">Supprimer</text>
-          <rect x="20" y="226" width="560" height="44" fill="#0f3460"/>
-          <circle cx="70" cy="248" r="16" fill="#e74c3c" opacity=".9"/>
-          <text x="70" y="254" font-family="sans-serif" font-size="18" text-anchor="middle">🔥</text>
-          <text x="200" y="253" font-family="sans-serif" font-size="13" fill="#3498db" text-anchor="middle">Salamèche</text>
-          <rect x="320" y="236" width="80" height="22" rx="11" fill="#e74c3c"/>
-          <text x="360" y="251" font-family="sans-serif" font-size="11" fill="#7d1c1c" text-anchor="middle">Feu</text>
-          <rect x="460" y="236" width="76" height="22" rx="4" fill="#16213e"/>
-          <text x="498" y="251" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,.6)" text-anchor="middle">Supprimer</text>
-        </svg>
-
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" style="width:100%;height:auto;min-height:220px;border-radius:8px;display:block;">
-          <rect width="600" height="200" fill="#1a1a2e"/>
-          <rect x="0" y="0" width="600" height="36" fill="#16213e"/>
-          <circle cx="14" cy="18" r="5" fill="#e74c3c"/>
-          <circle cx="28" cy="18" r="5" fill="#f39c12"/>
-          <circle cx="42" cy="18" r="5" fill="#2ecc71"/>
-          <text x="300" y="23" font-family="monospace" font-size="11" fill="rgba(255,255,255,.3)" text-anchor="middle">testdb.pokemons</text>
-          <rect x="20" y="48" width="560" height="26" rx="4" fill="#0f3460"/>
-          <text x="50"  y="65" font-family="monospace" font-size="11" fill="#f39c12">id</text>
-          <text x="110" y="65" font-family="monospace" font-size="11" fill="#f39c12">name</text>
-          <text x="230" y="65" font-family="monospace" font-size="11" fill="#f39c12">img_url</text>
-          <text x="390" y="65" font-family="monospace" font-size="11" fill="#f39c12">type1</text>
-          <text x="480" y="65" font-family="monospace" font-size="11" fill="#f39c12">type2</text>
-          <rect x="20" y="74" width="560" height="26" fill="#0a3d62"/>
-          <text x="50"  y="91" font-family="monospace" font-size="11" fill="white">25</text>
-          <text x="110" y="91" font-family="monospace" font-size="11" fill="#3498db">Pikachu</text>
-          <text x="230" y="91" font-family="monospace" font-size="11" fill="rgba(255,255,255,.4)">https://raw.github...</text>
-          <text x="390" y="91" font-family="monospace" font-size="11" fill="white">Électrik</text>
-          <text x="480" y="91" font-family="monospace" font-size="11" fill="rgba(255,255,255,.3)">NULL</text>
-          <rect x="20" y="100" width="560" height="26" fill="#16213e"/>
-          <text x="50"  y="117" font-family="monospace" font-size="11" fill="white">1</text>
-          <text x="110" y="117" font-family="monospace" font-size="11" fill="#3498db">Bulbizarre</text>
-          <text x="230" y="117" font-family="monospace" font-size="11" fill="rgba(255,255,255,.4)">https://raw.github...</text>
-          <text x="390" y="117" font-family="monospace" font-size="11" fill="white">Plante</text>
-          <text x="480" y="117" font-family="monospace" font-size="11" fill="white">Poison</text>
-          <rect x="20" y="126" width="560" height="26" fill="#0a3d62"/>
-          <text x="50"  y="143" font-family="monospace" font-size="11" fill="white">4</text>
-          <text x="110" y="143" font-family="monospace" font-size="11" fill="#3498db">Salamèche</text>
-          <text x="230" y="143" font-family="monospace" font-size="11" fill="rgba(255,255,255,.4)">https://raw.github...</text>
-          <text x="390" y="143" font-family="monospace" font-size="11" fill="white">Feu</text>
-          <text x="480" y="143" font-family="monospace" font-size="11" fill="rgba(255,255,255,.3)">NULL</text>
-          <rect x="20" y="152" width="560" height="26" fill="#16213e"/>
-          <text x="50"  y="169" font-family="monospace" font-size="11" fill="white">7</text>
-          <text x="110" y="169" font-family="monospace" font-size="11" fill="#3498db">Carapuce</text>
-          <text x="230" y="169" font-family="monospace" font-size="11" fill="rgba(255,255,255,.4)">https://raw.github...</text>
-          <text x="390" y="169" font-family="monospace" font-size="11" fill="white">Eau</text>
-          <text x="480" y="169" font-family="monospace" font-size="11" fill="rgba(255,255,255,.3)">NULL</text>
-          <text x="20" y="192" font-family="monospace" font-size="10" fill="rgba(255,255,255,.25)">4 ligne(s) au total</text>
-        </svg>
-
-      </div>
+    <div class="modal-thumb" style="aspect-ratio:16/9;cursor:pointer;" onclick="openLightboxSVG(this.querySelector('svg'),'Interface Pokédex')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" style="width:100%;height:100%;border-radius:8px;display:block;">
+        <rect width="600" height="320" fill="#1a1a2e"/>
+        <rect x="0" y="0" width="600" height="48" fill="#16213e"/>
+        <text x="300" y="30" font-family="sans-serif" font-size="18" font-weight="700" fill="#e74c3c" text-anchor="middle">Pokédex</text>
+        <rect x="20" y="60" width="340" height="32" rx="6" fill="#0f3460"/>
+        <text x="36" y="81" font-family="sans-serif" font-size="13" fill="rgba(255,255,255,.4)">Rechercher un Pokémon...</text>
+        <rect x="372" y="60" width="208" height="32" rx="6" fill="#e74c3c"/>
+        <text x="476" y="81" font-family="sans-serif" font-size="13" fill="white" text-anchor="middle">Ajouter un Pokémon</text>
+        <rect x="20" y="108" width="560" height="30" rx="4" fill="#e74c3c"/>
+        <text x="70"  y="128" font-family="sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle">Image</text>
+        <text x="200" y="128" font-family="sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle">Nom</text>
+        <text x="360" y="128" font-family="sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle">Type</text>
+        <text x="500" y="128" font-family="sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle">Actions</text>
+        <rect x="20" y="138" width="560" height="44" fill="#0f3460"/>
+        <circle cx="70" cy="160" r="16" fill="#f1c40f" opacity=".9"/>
+        <text x="70" y="166" font-family="sans-serif" font-size="18" text-anchor="middle">⚡</text>
+        <text x="200" y="165" font-family="sans-serif" font-size="13" fill="#3498db" text-anchor="middle">Pikachu</text>
+        <rect x="320" y="148" width="80" height="22" rx="11" fill="#f1c40f"/>
+        <text x="360" y="163" font-family="sans-serif" font-size="11" fill="#7d6608" text-anchor="middle">Électrik</text>
+        <rect x="460" y="148" width="76" height="22" rx="4" fill="#16213e"/>
+        <text x="498" y="163" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,.6)" text-anchor="middle">Supprimer</text>
+        <rect x="20" y="182" width="560" height="44" fill="#0a0a1a"/>
+        <circle cx="70" cy="204" r="16" fill="#27ae60" opacity=".9"/>
+        <text x="70" y="210" font-family="sans-serif" font-size="18" text-anchor="middle">🌿</text>
+        <text x="200" y="209" font-family="sans-serif" font-size="13" fill="#3498db" text-anchor="middle">Bulbizarre</text>
+        <rect x="320" y="192" width="80" height="22" rx="11" fill="#27ae60"/>
+        <text x="360" y="207" font-family="sans-serif" font-size="11" fill="#1a5c33" text-anchor="middle">Plante</text>
+        <rect x="460" y="192" width="76" height="22" rx="4" fill="#16213e"/>
+        <text x="498" y="207" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,.6)" text-anchor="middle">Supprimer</text>
+        <rect x="20" y="226" width="560" height="44" fill="#0f3460"/>
+        <circle cx="70" cy="248" r="16" fill="#e74c3c" opacity=".9"/>
+        <text x="70" y="254" font-family="sans-serif" font-size="18" text-anchor="middle">🔥</text>
+        <text x="200" y="253" font-family="sans-serif" font-size="13" fill="#3498db" text-anchor="middle">Salamèche</text>
+        <rect x="320" y="236" width="80" height="22" rx="11" fill="#e74c3c"/>
+        <text x="360" y="251" font-family="sans-serif" font-size="11" fill="#7d1c1c" text-anchor="middle">Feu</text>
+        <rect x="460" y="236" width="76" height="22" rx="4" fill="#16213e"/>
+        <text x="498" y="251" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,.6)" text-anchor="middle">Supprimer</text>
+      </svg>
     </div>
+
+    <div class="modal-thumb" style="aspect-ratio:16/9;cursor:pointer;" onclick="openLightboxSVG(this.querySelector('svg'),'Base de données Pokémon')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" style="width:100%;height:100%;border-radius:8px;display:block;">
+        <rect width="600" height="200" fill="#1a1a2e"/>
+        <rect x="0" y="0" width="600" height="36" fill="#16213e"/>
+        <circle cx="14" cy="18" r="5" fill="#e74c3c"/>
+        <circle cx="28" cy="18" r="5" fill="#f39c12"/>
+        <circle cx="42" cy="18" r="5" fill="#2ecc71"/>
+        <text x="300" y="23" font-family="monospace" font-size="11" fill="rgba(255,255,255,.3)" text-anchor="middle">testdb.pokemons</text>
+        <rect x="20" y="48" width="560" height="26" rx="4" fill="#0f3460"/>
+        <text x="50"  y="65" font-family="monospace" font-size="11" fill="#f39c12">id</text>
+        <text x="110" y="65" font-family="monospace" font-size="11" fill="#f39c12">name</text>
+        <text x="230" y="65" font-family="monospace" font-size="11" fill="#f39c12">img_url</text>
+        <text x="390" y="65" font-family="monospace" font-size="11" fill="#f39c12">type1</text>
+        <text x="480" y="65" font-family="monospace" font-size="11" fill="#f39c12">type2</text>
+        <rect x="20" y="74" width="560" height="26" fill="#0a3d62"/>
+        <text x="50"  y="91" font-family="monospace" font-size="11" fill="white">25</text>
+        <text x="110" y="91" font-family="monospace" font-size="11" fill="#3498db">Pikachu</text>
+        <text x="230" y="91" font-family="monospace" font-size="11" fill="rgba(255,255,255,.4)">https://raw.github...</text>
+        <text x="390" y="91" font-family="monospace" font-size="11" fill="white">Électrik</text>
+        <text x="480" y="91" font-family="monospace" font-size="11" fill="rgba(255,255,255,.3)">NULL</text>
+        <rect x="20" y="100" width="560" height="26" fill="#16213e"/>
+        <text x="50"  y="117" font-family="monospace" font-size="11" fill="white">1</text>
+        <text x="110" y="117" font-family="monospace" font-size="11" fill="#3498db">Bulbizarre</text>
+        <text x="230" y="117" font-family="monospace" font-size="11" fill="rgba(255,255,255,.4)">https://raw.github...</text>
+        <text x="390" y="117" font-family="monospace" font-size="11" fill="white">Plante</text>
+        <text x="480" y="117" font-family="monospace" font-size="11" fill="white">Poison</text>
+        <rect x="20" y="126" width="560" height="26" fill="#0a3d62"/>
+        <text x="50"  y="143" font-family="monospace" font-size="11" fill="white">4</text>
+        <text x="110" y="143" font-family="monospace" font-size="11" fill="#3498db">Salamèche</text>
+        <text x="230" y="143" font-family="monospace" font-size="11" fill="rgba(255,255,255,.4)">https://raw.github...</text>
+        <text x="390" y="143" font-family="monospace" font-size="11" fill="white">Feu</text>
+        <text x="480" y="143" font-family="monospace" font-size="11" fill="rgba(255,255,255,.3)">NULL</text>
+        <rect x="20" y="152" width="560" height="26" fill="#16213e"/>
+        <text x="50"  y="169" font-family="monospace" font-size="11" fill="white">7</text>
+        <text x="110" y="169" font-family="monospace" font-size="11" fill="#3498db">Carapuce</text>
+        <text x="230" y="169" font-family="monospace" font-size="11" fill="rgba(255,255,255,.4)">https://raw.github...</text>
+        <text x="390" y="169" font-family="monospace" font-size="11" fill="white">Eau</text>
+        <text x="480" y="169" font-family="monospace" font-size="11" fill="rgba(255,255,255,.3)">NULL</text>
+        <text x="20" y="192" font-family="monospace" font-size="10" fill="rgba(255,255,255,.25)">4 ligne(s) au total</text>
+      </svg>
+    </div>
+
   </div>
 </div>
 
@@ -858,6 +860,13 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   btn.classList.add('active');
+}
+function openLightboxSVG(svgEl, caption) {
+  const s = new XMLSerializer().serializeToString(svgEl);
+  const url = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(s)));
+  document.getElementById('glb-img').src = url;
+  document.getElementById('glb-cap').textContent = caption;
+  document.getElementById('glb').classList.add('open');
 }
 </script>
 <div id="lightbox">
@@ -913,5 +922,10 @@ document.getElementById('glb') && document.getElementById('glb').addEventListene
   if (e.target === document.getElementById('glb')) closeLB();
 });
 </script>
+<div id="glb">
+  <button id="glb-close" onclick="document.getElementById('glb').classList.remove('open')">✕</button>
+  <img id="glb-img" src="" alt="">
+  <div id="glb-cap"></div>
+</div>
 </body>
 </html>
