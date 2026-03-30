@@ -59,6 +59,81 @@
   color: var(--muted, #8892a4);
 }
 
+/* ─── MÉTHODE DE VEILLE ─── */
+.methode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+.methode-item {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  transition: border-color 0.2s;
+}
+.methode-item:hover { border-color: rgba(0,245,255,0.25); }
+.methode-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.methode-val {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ─── SOURCES ─── */
+.sources-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sources-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.sources-list li::before {
+  content: '›';
+  color: var(--cyan);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.sources-list a {
+  color: var(--cyan);
+  text-decoration: none;
+  opacity: 0.85;
+}
+.sources-list a:hover { opacity: 1; text-decoration: underline; }
+.source-type {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  padding: 1px 7px;
+  border-radius: 100px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.st-press { background: rgba(0,245,255,0.08); border: 1px solid rgba(0,245,255,0.25); color: #00f5ff; }
+.st-officiel { background: rgba(65,105,255,0.08); border: 1px solid rgba(65,105,255,0.3); color: #6b8aff; }
+.st-analyse { background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.3); color: #a78bfa; }
+.st-veille { background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.3); color: #fbbf24; }
+
 /* ─── MODAL OVERLAY ─── */
 .pdf-modal-backdrop {
   position: fixed;
@@ -77,7 +152,6 @@
   opacity: 1;
   pointer-events: all;
 }
-
 .pdf-modal {
   position: relative;
   width: min(900px, 94vw);
@@ -95,7 +169,6 @@
 .pdf-modal-backdrop.is-open .pdf-modal {
   transform: translateY(0) scale(1);
 }
-
 .pdf-modal-header {
   display: flex;
   align-items: center;
@@ -126,66 +199,59 @@
   animation: blink 1.4s infinite;
 }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-.pdf-modal-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
+.pdf-modal-actions { display: flex; align-items: center; gap: 8px; }
 .pdf-btn-close {
-  width: 30px;
-  height: 30px;
+  width: 30px; height: 30px;
   border-radius: 6px;
   border: 1px solid rgba(255,255,255,0.1);
   background: rgba(255,255,255,0.04);
   color: #8892a4;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   transition: background 0.15s, color 0.15s;
 }
 .pdf-btn-close:hover { background: rgba(255,80,80,0.15); color: #ff6b6b; border-color: rgba(255,80,80,0.3); }
-
 .pdf-btn-dl {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  display: inline-flex; align-items: center; gap: 6px;
   padding: 5px 12px;
   border-radius: 6px;
   border: 1px solid rgba(0,245,255,0.25);
   background: rgba(0,245,255,0.06);
   color: #00f5ff;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  cursor: pointer;
-  text-decoration: none;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+  cursor: pointer; text-decoration: none;
   transition: background 0.15s;
 }
 .pdf-btn-dl:hover { background: rgba(0,245,255,0.14); }
+.pdf-modal-body { flex: 1; overflow: hidden; }
+.pdf-modal-body iframe { width: 100%; height: 100%; border: none; display: block; }
+.pdf-slide-info { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: rgba(0,245,255,0.5); letter-spacing: 0.05em; }
 
-.pdf-modal-body {
-  flex: 1;
-  overflow: hidden;
+/* ─── RISQUES CYBERSEC ─── */
+.risques-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
 }
-.pdf-modal-body iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
+.risque-card {
+  background: rgba(255,107,107,0.05);
+  border: 1px solid rgba(255,107,107,0.2);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  transition: border-color 0.2s;
 }
-
-/* Slide counter dots */
-.pdf-slide-info {
+.risque-card:hover { border-color: rgba(255,107,107,0.4); }
+.risque-title {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  color: rgba(0,245,255,0.5);
-  letter-spacing: 0.05em;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #ff6b6b;
+  letter-spacing: 0.08em;
+  margin-bottom: 5px;
 }
+.risque-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -223,19 +289,18 @@
     <p class="veille-intro">
       J'ai suivi l'évolution des outils permettant de <strong>créer des applications sans écrire de code</strong>,
       grâce aux plateformes No-Code/Low-Code et à l'intelligence artificielle générative.
-      Cette veille a été conduite sur toute la durée de ma formation BTS SIO (2024–2026),
-      en m'appuyant sur des sources variées : articles techniques, sites officiels des plateformes,
-      retours d'expérience professionnels et presse spécialisée.
+      Cette veille a été conduite sur toute la durée de ma formation BTS SIO (202–2026),
+      en m'appuyant sur des sources variées : articles de presse spécialisée, rapports d'analystes,
+      retours d'expérience professionnels et documentation officielle des plateformes.
     </p>
     <p class="veille-intro">
       Ce sujet m'a intéressé car il touche directement mon domaine : en tant que développeur en formation,
       je voulais comprendre si ces outils allaient <strong>remplacer ou simplement compléter</strong> le code traditionnel.
       La question est aussi stratégique : dans un contexte où de nombreuses entreprises cherchent
-      à réduire les coûts de développement, comprendre les limites du no-code est devenu
-      une compétence professionnelle à part entière.
+      à réduire les coûts de développement, comprendre les limites du no-code — notamment en matière de sécurité —
+      est devenu une compétence professionnelle à part entière.
     </p>
 
-    <!-- ─── BOUTON PDF ─── -->
     <div class="pdf-trigger-wrap">
       <button class="btn-pdf" id="openPdfBtn" onclick="openPdfModal()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -248,6 +313,33 @@
         Voir la présentation PDF
       </button>
       <span class="btn-pdf-hint">7 slides · veille complète</span>
+    </div>
+  </div>
+
+  <!-- BLOC 1b : Méthode de veille -->
+  <div class="glass reveal reveal-delay-2">
+    <h2>Comment j'ai conduit cette veille ?</h2>
+    <p class="veille-intro">
+      Ma veille a été continue sur deux ans (2024–2026), avec une consultation régulière de sources variées
+      pour suivre l'évolution rapide de ce secteur.
+    </p>
+    <div class="methode-grid">
+      <div class="methode-item">
+        <div class="methode-label">Outils utilisés</div>
+        <div class="methode-val">Google Alerts (mots-clés : "no-code", "low-code IA"), flux RSS ZDNet &amp; Le Monde Informatique</div>
+      </div>
+      <div class="methode-item">
+        <div class="methode-label">Fréquence</div>
+        <div class="methode-val">Lecture hebdomadaire des alertes, revue mensuelle approfondie des articles</div>
+      </div>
+      <div class="methode-item">
+        <div class="methode-label">Types de sources</div>
+        <div class="methode-val">Presse spécialisée, rapports Gartner, documentation officielle, retours pros</div>
+      </div>
+      <div class="methode-item">
+        <div class="methode-label">Critère de sélection</div>
+        <div class="methode-val">Sources récentes (&lt; 18 mois), fiables et recoupées sur plusieurs médias</div>
+      </div>
     </div>
   </div>
 
@@ -296,7 +388,7 @@
 
   <!-- BLOC 3 : Outils étudiés -->
   <div class="glass reveal reveal-delay-3">
-    <h2>Outils</h2>
+    <h2>Outils étudiés</h2>
     <div class="outils-grid">
       <div class="outil-card">
         <div class="outil-name">Builder.ai</div>
@@ -323,46 +415,107 @@
       <div class="glass" style="transform:none;">
         <h2 style="color:#00f5ff;">✔ Avantages</h2>
         <ul>
-          <li>Application créée en quelques heures</li>
-          <li>Accessible sans formation technique</li>
-          <li>Idéal pour prototype / test rapide</li>
-          <li>Coût très réduit pour les TPE/PME</li>
-          <li>Mises à jour simplifiées</li>
+          <li>Application créée en quelques heures vs plusieurs semaines</li>
+          <li>Accessible sans formation technique — démocratise la création d'outils</li>
+          <li>Idéal pour prototype / MVP à tester rapidement</li>
+          <li>Coût très réduit pour les TPE/PME (abonnement vs salaire dev)</li>
+          <li>Mises à jour simplifiées, pas de dette technique apparente</li>
         </ul>
       </div>
       <div class="glass" style="transform:none;">
         <h2 style="color:#ff6b6b;">✘ Limites</h2>
         <ul>
-          <li>Personnalisation avancée bloquée</li>
-          <li>Performances limitées à grande échelle</li>
-          <li>Sécurité difficile à maîtriser</li>
-          <li>Dépendance forte à la plateforme</li>
-          <li>Migration complexe si on veut partir</li>
+          <li>Personnalisation avancée bloquée par les contraintes de la plateforme</li>
+          <li>Performances dégradées au-delà d'un certain volume de données</li>
+          <li><strong>Sécurité difficile à maîtriser</strong> : code opaque, pas d'audit possible</li>
+          <li>Vendor lock-in fort : données et logique métier captives</li>
+          <li>Migration coûteuse ou impossible si la plateforme ferme ou change ses tarifs</li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- BLOC 5 : Conclusion -->
+  <!-- BLOC 5 : Risques cybersécurité (NOUVEAU) -->
+  <div class="glass reveal reveal-delay-5">
+    <h2>Risques cybersécurité identifiés</h2>
+    <p class="veille-intro">
+      En tant que futur développeur orienté sécurité, j'ai analysé ces plateformes sous l'angle des risques
+      qu'elles introduisent dans le système d'information d'une entreprise.
+    </p>
+    <div class="risques-grid">
+      <div class="risque-card">
+        <div class="risque-title">Code source opaque</div>
+        <div class="risque-desc">Le code généré n'est pas auditable. Impossible d'identifier les vulnérabilités (injections SQL, XSS…).</div>
+      </div>
+      <div class="risque-card">
+        <div class="risque-title">Données hébergées en SaaS</div>
+        <div class="risque-desc">Les données métier transitent sur les serveurs du fournisseur — risque RGPD et de fuite en cas de brèche tierce.</div>
+      </div>
+      <div class="risque-card">
+        <div class="risque-title">Mises à jour non maîtrisées</div>
+        <div class="risque-desc">La plateforme peut modifier le comportement de l'app sans que l'entreprise en soit informée.</div>
+      </div>
+      <div class="risque-card">
+        <div class="risque-title">Authentification limitée</div>
+        <div class="risque-desc">Les mécanismes d'auth intégrés (SSO, MFA) sont souvent basiques ou réservés aux plans payants.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOC 6 : Conclusion -->
   <div class="glass reveal reveal-delay-5">
     <h2>Conclusion &amp; lien avec ma formation</h2>
     <p>
-      Ces outils <strong>ne remplacent pas le développeur</strong> — ils accélèrent certaines tâches.
-      Pour des applications complexes, sécurisées et maintenables, le code traditionnel reste indispensable.
+      Ces outils <strong>ne remplacent pas le développeur</strong> — ils déplacent la complexité.
+      Ce qui est gagné en rapidité de création est souvent perdu en contrôle, en sécurité et en maintenabilité.
+      Pour des applications qui gèrent des données sensibles ou nécessitent une conformité réglementaire,
+      le code traditionnel reste indispensable.
     </p>
     <p>
-      En tant que futur développeur orienté cybersécurité, cette veille m'a appris à analyser
-      les risques liés aux plateformes tierces et à comprendre pourquoi la maîtrise du code source
-      reste un avantage stratégique.
+      Cette veille m'a conforté dans mon orientation cybersécurité : comprendre <strong>pourquoi et comment
+      une plateforme no-code peut introduire des risques</strong> dans un SI est une compétence directement
+      applicable en audit ou en conseil. Savoir lire un code source, identifier une vulnérabilité ou
+      évaluer la surface d'attaque d'un tiers — c'est exactement ce que le no-code ne peut pas faire à la place du développeur.
     </p>
 
     <h3 style="margin-top:20px;">Sources</h3>
-    <ul>
-      <li><a href="https://www.builder.ai" target="_blank">Builder.ai</a></li>
-      <li><a href="https://www.appsheet.com" target="_blank">Google AppSheet</a></li>
-      <li><a href="https://www.glideapps.com" target="_blank">Glide</a></li>
-      <li><a href="https://www.appypie.com" target="_blank">Appy Pie</a></li>
-      <li>Business Insider (2025) — article sur la création d'apps sans code par IA</li>
+    <ul class="sources-list">
+      <li>
+        <span>
+          <a href="https://www.zdnet.fr" target="_blank">ZDNet France</a> — Dossier "Le no-code face aux limites de la sécurité applicative" (2024)
+          <span class="source-type st-press">Presse spécialisée</span>
+        </span>
+      </li>
+      <li>
+        <span>
+          <a href="https://www.lemondeinformatique.fr" target="_blank">Le Monde Informatique</a> — "No-code : opportunité ou risque pour les DSI ?" (2025)
+          <span class="source-type st-press">Presse spécialisée</span>
+        </span>
+      </li>
+      <li>
+        <span>
+          <a href="https://www.gartner.com" target="_blank">Gartner</a> — Magic Quadrant Low-Code Application Platforms (2024)
+          <span class="source-type st-analyse">Rapport analyste</span>
+        </span>
+      </li>
+      <li>
+        <span>
+          <a href="https://www.builder.ai" target="_blank">Builder.ai</a> · <a href="https://www.appsheet.com" target="_blank">Google AppSheet</a> · <a href="https://www.glideapps.com" target="_blank">Glide</a> · <a href="https://www.appypie.com" target="_blank">Appy Pie</a> — Documentation officielle
+          <span class="source-type st-officiel">Officiel</span>
+        </span>
+      </li>
+      <li>
+        <span>
+          Business Insider (2025) — "AI-powered app builders are changing who can create software"
+          <span class="source-type st-press">Presse</span>
+        </span>
+      </li>
+      <li>
+        <span>
+          OWASP — Recommandations sur la sécurité des applications SaaS tierces
+          <span class="source-type st-analyse">Référentiel sécurité</span>
+        </span>
+      </li>
     </ul>
   </div>
 
@@ -374,12 +527,10 @@
 <div class="pdf-modal-backdrop" id="pdfModalBackdrop" onclick="closePdfOnBackdrop(event)">
   <div class="pdf-modal" id="pdfModal">
     <div class="pdf-modal-header">
-      <div class="pdf-modal-title">
-        Veille Technologique — Présentation PDF
-      </div>
+      <div class="pdf-modal-title">Veille Technologique — Présentation PDF</div>
       <div class="pdf-modal-actions">
         <span class="pdf-slide-info">7 slides</span>
-        <a class="pdf-btn-dl" href="Veille_Technologique___La_Création_d_Applications_Sans_Coder__1_.pdf" download title="Télécharger le PDF">
+        <a class="pdf-btn-dl" href="Veille_Technologique___La_Création_d_Applications_Sans_Coder__1_.pdf" download title="Télécharger">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
             <polyline points="7 10 12 15 17 10"/>
@@ -396,45 +547,28 @@
       </div>
     </div>
     <div class="pdf-modal-body">
-      <iframe
-        id="pdfIframe"
-        src=""
-        title="Veille Technologique PDF"
-        loading="lazy"
-      ></iframe>
+      <iframe id="pdfIframe" src="" title="Veille Technologique PDF" loading="lazy"></iframe>
     </div>
   </div>
 </div>
 
 <script>
   const PDF_SRC = "Veille_Technologique___La_Création_d_Applications_Sans_Coder__1_.pdf";
-
   function openPdfModal() {
     const backdrop = document.getElementById('pdfModalBackdrop');
-    const iframe   = document.getElementById('pdfIframe');
-    // Load the PDF only on first open
-    if (!iframe.src || iframe.src === window.location.href) {
-      iframe.src = PDF_SRC;
-    }
+    const iframe = document.getElementById('pdfIframe');
+    if (!iframe.src || iframe.src === window.location.href) iframe.src = PDF_SRC;
     backdrop.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   }
-
   function closePdfModal() {
     document.getElementById('pdfModalBackdrop').classList.remove('is-open');
     document.body.style.overflow = '';
   }
-
   function closePdfOnBackdrop(e) {
-    if (e.target === document.getElementById('pdfModalBackdrop')) {
-      closePdfModal();
-    }
+    if (e.target === document.getElementById('pdfModalBackdrop')) closePdfModal();
   }
-
-  // Close on Escape key
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closePdfModal();
-  });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePdfModal(); });
 </script>
 
 <script src="main.js"></script>
