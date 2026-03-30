@@ -808,46 +808,32 @@
     </div>
 
     <div class="modal-thumb" style="aspect-ratio:16/9;cursor:pointer;" onclick="openLightboxSVG(this.querySelector('svg'),'Base de données Pokémon')">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" style="width:100%;height:100%;border-radius:8px;display:block;">
-        <rect width="600" height="200" fill="#1a1a2e"/>
-        <rect x="0" y="0" width="600" height="36" fill="#16213e"/>
-        <circle cx="14" cy="18" r="5" fill="#e74c3c"/>
-        <circle cx="28" cy="18" r="5" fill="#f39c12"/>
-        <circle cx="42" cy="18" r="5" fill="#2ecc71"/>
-        <text x="300" y="23" font-family="monospace" font-size="11" fill="rgba(255,255,255,.3)" text-anchor="middle">testdb.pokemons</text>
-        <rect x="20" y="48" width="560" height="26" rx="4" fill="#0f3460"/>
-        <text x="50"  y="65" font-family="monospace" font-size="11" fill="#f39c12">id</text>
-        <text x="110" y="65" font-family="monospace" font-size="11" fill="#f39c12">name</text>
-        <text x="230" y="65" font-family="monospace" font-size="11" fill="#f39c12">img_url</text>
-        <text x="390" y="65" font-family="monospace" font-size="11" fill="#f39c12">type1</text>
-        <text x="480" y="65" font-family="monospace" font-size="11" fill="#f39c12">type2</text>
-        <rect x="20" y="74" width="560" height="26" fill="#0a3d62"/>
-        <text x="50"  y="91" font-family="monospace" font-size="11" fill="white">25</text>
-        <text x="110" y="91" font-family="monospace" font-size="11" fill="#3498db">Pikachu</text>
-        <text x="230" y="91" font-family="monospace" font-size="11" fill="rgba(255,255,255,.4)">https://raw.github...</text>
-        <text x="390" y="91" font-family="monospace" font-size="11" fill="white">Électrik</text>
-        <text x="480" y="91" font-family="monospace" font-size="11" fill="rgba(255,255,255,.3)">NULL</text>
-        <rect x="20" y="100" width="560" height="26" fill="#16213e"/>
-        <text x="50"  y="117" font-family="monospace" font-size="11" fill="white">1</text>
-        <text x="110" y="117" font-family="monospace" font-size="11" fill="#3498db">Bulbizarre</text>
-        <text x="230" y="117" font-family="monospace" font-size="11" fill="rgba(255,255,255,.4)">https://raw.github...</text>
-        <text x="390" y="117" font-family="monospace" font-size="11" fill="white">Plante</text>
-        <text x="480" y="117" font-family="monospace" font-size="11" fill="white">Poison</text>
-        <rect x="20" y="126" width="560" height="26" fill="#0a3d62"/>
-        <text x="50"  y="143" font-family="monospace" font-size="11" fill="white">4</text>
-        <text x="110" y="143" font-family="monospace" font-size="11" fill="#3498db">Salamèche</text>
-        <text x="230" y="143" font-family="monospace" font-size="11" fill="rgba(255,255,255,.4)">https://raw.github...</text>
-        <text x="390" y="143" font-family="monospace" font-size="11" fill="white">Feu</text>
-        <text x="480" y="143" font-family="monospace" font-size="11" fill="rgba(255,255,255,.3)">NULL</text>
-        <rect x="20" y="152" width="560" height="26" fill="#16213e"/>
-        <text x="50"  y="169" font-family="monospace" font-size="11" fill="white">7</text>
-        <text x="110" y="169" font-family="monospace" font-size="11" fill="#3498db">Carapuce</text>
-        <text x="230" y="169" font-family="monospace" font-size="11" fill="rgba(255,255,255,.4)">https://raw.github...</text>
-        <text x="390" y="169" font-family="monospace" font-size="11" fill="white">Eau</text>
-        <text x="480" y="169" font-family="monospace" font-size="11" fill="rgba(255,255,255,.3)">NULL</text>
-        <text x="20" y="192" font-family="monospace" font-size="10" fill="rgba(255,255,255,.25)">4 ligne(s) au total</text>
-      </svg>
-    </div>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 120" style="width:100%;height:100%;border-radius:8px;display:block;">
+    <rect width="600" height="120" fill="#1e1e2e"/>
+    <rect x="0" y="0" width="600" height="28" fill="#16213e"/>
+    <text x="14" y="19" font-family="monospace" font-size="11" fill="rgba(255,255,255,.4)">testdb.pokemons: 1 ligne(s) au total (environ)</text>
+
+    <!-- En-têtes -->
+    <rect x="14" y="32" width="572" height="24" fill="#2a2a3e"/>
+    <text x="24"  y="48" font-family="monospace" font-size="11" fill="#f39c12">🔑 id</text>
+    <text x="80"  y="48" font-family="monospace" font-size="11" fill="#f39c12">🔑 name</text>
+    <text x="200" y="48" font-family="monospace" font-size="11" fill="#f39c12">img_url</text>
+    <text x="390" y="48" font-family="monospace" font-size="11" fill="#f39c12">nickname</text>
+    <text x="460" y="48" font-family="monospace" font-size="11" fill="#f39c12">type1</text>
+    <text x="520" y="48" font-family="monospace" font-size="11" fill="#f39c12">type2</text>
+
+    <!-- Ligne sélectionnée -->
+    <rect x="14" y="56" width="572" height="26" fill="#1a4a8a"/>
+    <text x="24"  y="73" font-family="monospace" font-size="11" fill="white">676</text>
+    <text x="80"  y="73" font-family="monospace" font-size="11" fill="white">Couafarel</text>
+    <text x="200" y="73" font-family="monospace" font-size="11" fill="rgba(255,255,255,.5)">https://raw.githubusercontent.com/Yarkis01/TyraDex/im...</text>
+    <text x="390" y="73" font-family="monospace" font-size="11" fill="rgba(255,255,255,.35)">(NULL)</text>
+    <text x="460" y="73" font-family="monospace" font-size="11" fill="white">Normal</text>
+    <text x="520" y="73" font-family="monospace" font-size="11" fill="rgba(255,255,255,.35)">(NULL)</text>
+
+    <text x="14" y="105" font-family="monospace" font-size="10" fill="rgba(255,255,255,.25)">testdb.pokemons: 1 ligne(s) au total (environ)</text>
+  </svg>
+</div>
 
   </div>
 </div>
